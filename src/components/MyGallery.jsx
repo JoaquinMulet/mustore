@@ -48,7 +48,7 @@ export default function MyGallery({ productImages, title }) {
   return (
     <div className="relative w-full overflow-hidden">
       {/* Contenedor de imagen con skeleton loader */}
-      <div className="flex justify-center items-center bg-white relative">
+      <div className="flex justify-center items-center bg-white relative max-w-full">
         {/* Skeleton loader */}
         {isLoading && (
           <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
@@ -58,7 +58,7 @@ export default function MyGallery({ productImages, title }) {
         <img
           src={productImages[currentIndex]}
           alt={`${title} - Imagen ${currentIndex + 1}`}
-          className={`w-[95vw] md:w-full h-[400px] md:h-[500px] object-contain transition-opacity duration-300 ${
+          className={`w-full max-w-[95vw] md:max-w-full h-[400px] md:h-[500px] object-contain transition-opacity duration-300 ${
             loadedImages[currentIndex] && !isLoading ? 'opacity-100' : 'opacity-0'
           }`}
           onLoad={() => {
@@ -78,28 +78,33 @@ export default function MyGallery({ productImages, title }) {
         />
       </div>
 
-      {/* Botón Prev */}
-      <button
-        onClick={handlePrev}
-        className="absolute top-1/2 left-2 md:left-4 transform -translate-y-1/2 bg-white/80 hover:bg-white w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-black transition-all duration-300 shadow-lg overflow-hidden"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M15 18l-6-6 6-6"/>
-        </svg>
-      </button>
+      {/* Contenedor de navegación */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="relative h-full max-w-full mx-auto">
+          {/* Botón Prev */}
+          <button
+            onClick={handlePrev}
+            className="pointer-events-auto absolute top-1/2 left-1 md:left-2 -translate-y-1/2 bg-white/80 hover:bg-white w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-black transition-colors duration-300 shadow-lg z-10"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+          </button>
 
-      {/* Botón Next */}
-      <button
-        onClick={handleNext}
-        className="absolute top-1/2 right-2 md:right-4 transform -translate-y-1/2 bg-white/80 hover:bg-white w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-black transition-all duration-300 shadow-lg overflow-hidden"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M9 18l6-6-6-6"/>
-        </svg>
-      </button>
+          {/* Botón Next */}
+          <button
+            onClick={handleNext}
+            className="pointer-events-auto absolute top-1/2 right-1 md:right-2 -translate-y-1/2 bg-white/80 hover:bg-white w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-black transition-colors duration-300 shadow-lg z-10"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </button>
+        </div>
+      </div>
 
       {/* Dots (paginación) con preview en hover */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-10">
         {productImages.map((img, idx) => (
           <button
             key={idx}

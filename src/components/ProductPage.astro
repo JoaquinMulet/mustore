@@ -53,31 +53,112 @@ function processMarkdown(text: string) {
       transform: scale(1.05);
     }
     */
-    @keyframes pulsate {
+    @keyframes shine {
       0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
-      }
-      50% {
-        transform: scale(1.15);
-        box-shadow: 0 0 30px 10px rgba(37, 99, 235, 0.4);
+        background-position: -200% 50%;
       }
       100% {
+        background-position: 200% 50%;
+      }
+    }
+
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 5px rgba(37, 99, 235, 0.5),
+                   0 0 15px rgba(37, 99, 235, 0.3),
+                   inset 0 0 5px rgba(255, 255, 255, 0.1);
+      }
+      50% {
+        box-shadow: 0 0 15px rgba(37, 99, 235, 0.7),
+                   0 0 25px rgba(37, 99, 235, 0.5),
+                   inset 0 0 10px rgba(255, 255, 255, 0.2);
+      }
+      100% {
+        box-shadow: 0 0 5px rgba(37, 99, 235, 0.5),
+                   0 0 15px rgba(37, 99, 235, 0.3),
+                   inset 0 0 5px rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    @keyframes border-glow {
+      0%, 100% {
+        border-color: rgba(37, 99, 235, 0.5);
+      }
+      50% {
+        border-color: rgba(96, 165, 250, 0.8);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
+      }
+      50% {
+        transform: scale(1.02);
       }
     }
 
     .pulsate-button {
-      animation: pulsate 1.5s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      animation: glow 3s ease-in-out infinite, pulse 2s ease-in-out infinite;
       transition: all 0.3s ease;
+      border: 2px solid rgba(37, 99, 235, 0.5);
+    }
+
+    .pulsate-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0) 20%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0) 80%,
+        transparent 100%
+      );
+      animation: shine 3s linear infinite;
+    }
+
+    .pulsate-button::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(90deg, #60a5fa, #3b82f6, #2563eb);
+      z-index: -1;
+      animation: border-glow 2s linear infinite;
+      border-radius: 9999px;
+      opacity: 0.5;
     }
 
     .pulsate-button:hover {
-      animation: none;
-      transform: scale(1.1);
-      background-color: #1d4ed8;
-      box-shadow: 0 0 20px 5px rgba(37, 99, 235, 0.3);
+      transform: translateY(-1px) scale(1.02);
+      background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+      box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+    }
+
+    .pulsate-button:hover::before {
+      animation: shine 2s linear infinite;
+    }
+
+    .pulsate-button:active {
+      transform: translateY(1px);
+    }
+
+    .pulsate-button span,
+    .pulsate-button svg {
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .pulsate-button svg {
+      filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
     }
   </style>
 
@@ -112,9 +193,9 @@ function processMarkdown(text: string) {
           </div>
           <button
             id="openPurchaseModal"
-            class="w-full md:w-auto bg-blue-600 text-white py-4 px-6 rounded-full text-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 pulsate-button"
+            class="w-full md:w-auto text-white py-4 px-8 rounded-full text-lg font-semibold transition-all flex items-center justify-center gap-3 pulsate-button select-none"
           >
-            <span>Comprar ahora</span>
+            <span class="whitespace-nowrap">Comprar ahora</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-5 w-5"
