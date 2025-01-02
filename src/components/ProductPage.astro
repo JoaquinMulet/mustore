@@ -82,7 +82,7 @@ function processMarkdown(text: string) {
   </style>
 
   <div class="max-w-[980px] mx-auto px-4 py-8 md:py-16">
-    <div class="md:flex md:flex-col md:gap-12 md:items-start"> <!-- Cambiado a flex-col para apilar verticalmente en dispositivos medianos -->
+    <div class="md:flex md:flex-col md:gap-12 md:items-start">
       
       <!-- Galería (React) -->
       <div class="md:w-full mt-16">
@@ -300,13 +300,13 @@ function processMarkdown(text: string) {
       modal.classList.add('flex');
       document.body.style.overflow = 'hidden';
 
-      // Rastrear evento InitiateCheckout cuando el usuario hace clic en Comprar Ahora
+      // Rastrear evento InitiateCheckout con los valores dinámicos
       if (typeof window !== 'undefined' && window.fbq) {
         window.fbq('track', 'InitiateCheckout', {
-          content_name: '{title}',
+          content_name: title,
           content_type: 'product',
-          content_ids: ['{title}'],
-          value: {price},
+          content_ids: [title],
+          value: price,
           currency: 'CLP'
         });
       }
@@ -329,10 +329,10 @@ function processMarkdown(text: string) {
     // Inicializar el evento ViewContent cuando se carga la página
     if (typeof window !== 'undefined' && window.fbq) {
       window.fbq('track', 'ViewContent', {
-        content_name: '{title}',
+        content_name: title,
         content_type: 'product',
-        content_ids: ['{title}'],
-        value: {price},
+        content_ids: [title],
+        value: price,
         currency: 'CLP'
       });
     }

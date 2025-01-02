@@ -14,27 +14,92 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title} | MuStore</title>
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600&display=swap" rel="stylesheet">
-    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=satoshi@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Meta Pixel Code -->
+    <script>
+      !function(f,b,e,v,n,t,s){
+        if(f.fbq)return;
+        n=f.fbq=function(){
+          n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments)
+        };
+        if(!f._fbq)f._fbq=n;
+        n.push=n;
+        n.loaded=!0;
+        n.version='2.0';
+        n.queue=[];
+        t=b.createElement(e);
+        t.async=!0;
+        t.src=v;
+        s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)
+      }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '607793071632259');
+      fbq('track', 'PageView');
+    </script>
+    <noscript
+      ><img
+        height="1"
+        width="1"
+        style="display:none"
+        src="https://www.facebook.com/tr?id=607793071632259&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
   </head>
+
   <body class="min-h-screen bg-white flex flex-col">
     <header class="fixed w-full bg-white/90 backdrop-blur-md z-50">
-      <nav class="max-w-[980px] mx-auto px-4 h-[44px] flex items-center justify-between text-sm">
+      <nav
+        class="max-w-[980px] mx-auto px-4 h-[44px] flex items-center justify-between text-sm"
+      >
         <div class="hidden md:flex items-center space-x-8">
-          <a href="/" class="text-gray-900 hover:text-gray-600 transition-colors">Home</a>
-          <a href="/about" class="text-gray-900 hover:text-gray-600 transition-colors">Nosotros</a>
+          <a
+            href="/"
+            class="text-gray-900 hover:text-gray-600 transition-colors"
+            >Home</a
+          >
+          <a
+            href="/about"
+            class="text-gray-900 hover:text-gray-600 transition-colors"
+            >Nosotros</a
+          >
         </div>
 
-        <a href="/" class="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-1" aria-label="MuStore Home">
+        <a
+          href="/"
+          class="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-1"
+          aria-label="MuStore Home"
+        >
           <span class="text-2xl font-bold">μ</span>
           <span class="font-['Satoshi'] text-lg tracking-wide">Store</span>
         </a>
 
         <div class="flex-1 flex justify-end">
           <!-- Mobile menu button -->
-          <button class="md:hidden text-gray-900" id="mobile-menu-button" aria-label="Menu">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          <button
+            class="md:hidden text-gray-900"
+            id="mobile-menu-button"
+            aria-label="Menu"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             </svg>
           </button>
         </div>
@@ -55,7 +120,10 @@ const { title } = Astro.props;
 
     <footer class="bg-gray-100 py-6 mt-auto">
       <div class="max-w-[980px] mx-auto px-4 text-center text-gray-600">
-        <p>&copy; Copyright {new Date().getFullYear()} - MUSTORE CHILE. Todos los derechos reservados.</p>
+        <p>
+          &copy; Copyright {new Date().getFullYear()} - MUSTORE CHILE. Todos los
+          derechos reservados.
+        </p>
       </div>
     </footer>
 
