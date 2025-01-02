@@ -81,9 +81,9 @@ export default function MyGallery({ productImages, title }) {
       {/* Botón Prev */}
       <button
         onClick={handlePrev}
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80 hover:bg-white px-3 py-2 rounded-full text-sm text-black transition-all duration-300 shadow-lg"
+        className="absolute top-1/2 left-2 md:left-4 transform -translate-y-1/2 bg-white/80 hover:bg-white w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-black transition-all duration-300 shadow-lg overflow-hidden"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M15 18l-6-6 6-6"/>
         </svg>
       </button>
@@ -91,9 +91,9 @@ export default function MyGallery({ productImages, title }) {
       {/* Botón Next */}
       <button
         onClick={handleNext}
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80 hover:bg-white px-3 py-2 rounded-full text-sm text-black transition-all duration-300 shadow-lg"
+        className="absolute top-1/2 right-2 md:right-4 transform -translate-y-1/2 bg-white/80 hover:bg-white w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-black transition-all duration-300 shadow-lg overflow-hidden"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M9 18l6-6-6-6"/>
         </svg>
       </button>
