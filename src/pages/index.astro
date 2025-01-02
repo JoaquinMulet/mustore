@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const products = await getCollection('products');
+---
+
+<Layout title="MuStore | Accesorios Premium para Smartphones">
+  <!-- Hero Section -->
+  <section class="relative h-[80vh] flex items-center justify-center bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100">
+    <div class="text-center px-4">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6">
+        Aún puedes sorprender<br/>
+        con un regalo mágico.
+      </h1>
+      <p class="text-xl md:text-2xl mb-8 text-gray-700">
+        Encuentra el regalo perfecto en nuestra colección.
+      </p>
+      <a 
+        href="#products" 
+        class="inline-block bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition-colors"
+      >
+        Ver productos
+      </a>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section id="products" class="py-20 px-4">
+    <div class="max-w-[980px] mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-12">Nuestros Productos</h2>
+      <div class="grid md:grid-cols-1 gap-8 max-w-2xl mx-auto">
+        {products.map((product) => (
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="aspect-w-16 aspect-h-9 relative">
+              <img 
+                src={product.data.productImages[0]} 
+                alt={product.data.title}
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-2xl font-bold mb-2">{product.data.title}</h3>
+              <p class="text-gray-600 mb-4">
+                {product.data.descriptionParagraphs[0]}
+              </p>
+              <div class="flex justify-between items-center">
+                <div class="space-x-2">
+                  <span class="text-2xl font-bold">${product.data.price.toLocaleString('es-CL')}</span>
+                  {product.data.oldPrice && (
+                    <span class="text-lg text-gray-500 line-through">${product.data.oldPrice.toLocaleString('es-CL')}</span>
+                  )}
+                </div>
+                <a 
+                  href={`/products/${product.slug}`}
+                  class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors"
+                >
+                  Comprar ahora
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

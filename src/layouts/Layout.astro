@@ -1,0 +1,71 @@
+---
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="MuStore - Accesorios y Electrónica Premium para Smartphones" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} | MuStore</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700&display=swap" rel="stylesheet">
+  </head>
+  <body class="min-h-screen bg-white flex flex-col">
+    <header class="fixed w-full bg-white/90 backdrop-blur-md z-50">
+      <nav class="max-w-[980px] mx-auto px-4 h-[44px] flex items-center justify-between text-sm">
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="/" class="text-gray-900 hover:text-gray-600 transition-colors">Home</a>
+          <a href="/about" class="text-gray-900 hover:text-gray-600 transition-colors">Nosotros</a>
+        </div>
+
+        <a href="/" class="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-1" aria-label="MuStore Home">
+          <span class="text-2xl font-bold">μ</span>
+          <span class="font-['Satoshi'] text-lg tracking-wide">Store</span>
+        </a>
+
+        <div class="flex-1 flex justify-end">
+          <!-- Mobile menu button -->
+          <button class="md:hidden text-gray-900" id="mobile-menu-button" aria-label="Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Mobile menu -->
+      <div class="hidden md:hidden bg-white" id="mobile-menu">
+        <div class="px-4 pt-2 pb-3 space-y-1">
+          <a href="/" class="block px-3 py-2 text-gray-900">Home</a>
+          <a href="/about" class="block px-3 py-2 text-gray-900">Nosotros</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <footer class="bg-gray-100 py-6 mt-auto">
+      <div class="max-w-[980px] mx-auto px-4 text-center text-gray-600">
+        <p>&copy; Copyright {new Date().getFullYear()} - MUSTORE CHILE. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+
+    <script>
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      mobileMenuButton?.addEventListener('click', () => {
+        mobileMenu?.classList.toggle('hidden');
+      });
+    </script>
+  </body>
+</html>

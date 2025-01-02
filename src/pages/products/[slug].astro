@@ -1,0 +1,34 @@
+---
+/* imports y lógica JavaScript/TypeScript */
+import { getCollection } from 'astro:content';
+import ProductPage from '../../components/ProductPage.astro';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  return products.map(product => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+}
+
+// Obtenemos los datos del producto
+const { product } = Astro.props;
+const { Content } = await product.render();
+
+const title = `${product.data.title} | MuStore`;
+---
+
+<!-- Aquí comienza el HTML/JSX -->
+<ProductPage
+  title={title}
+  productImages={product.data.productImages}
+  price={product.data.price}
+  oldPrice={product.data.oldPrice}
+  descriptionParagraphs={product.data.descriptionParagraphs}
+  reviews={product.data.reviews}
+  instructions={product.data.instructions}
+  shipping={product.data.shipping}
+  warranty={product.data.warranty}
+>
+  <Content />
+</ProductPage>
