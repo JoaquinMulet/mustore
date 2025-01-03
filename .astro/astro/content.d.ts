@@ -148,16 +148,16 @@ declare module 'astro:content' {
   collection: "products";
   data: InferEntrySchema<"products">
 } & { render(): Render[".md"] };
-"lampara_g.md": {
-	id: "lampara_g.md";
-  slug: "lampara_g";
+"mini_aire_acondicionado copy.md": {
+	id: "mini_aire_acondicionado copy.md";
+  slug: "mini_aire_acondicionado-copy";
   body: string;
   collection: "products";
   data: InferEntrySchema<"products">
 } & { render(): Render[".md"] };
-"mini_aire_acondicionado copy.md": {
-	id: "mini_aire_acondicionado copy.md";
-  slug: "mini_aire_acondicionado-copy";
+"smarttuneone.md": {
+	id: "smarttuneone.md";
+  slug: "smarttuneone";
   body: string;
   collection: "products";
   data: InferEntrySchema<"products">
