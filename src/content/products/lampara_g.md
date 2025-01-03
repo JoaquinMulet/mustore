@@ -1,5 +1,5 @@
 ---
-title: "Mini Aire Acondicionado Portátil"
+title: "G-Lamp 4 en 1 con Parlante, Cargador, Lámpara LED RGB y Radio FM | MuStore "
 price: 29990
 oldPrice: 59990
 productImages:
