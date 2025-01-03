@@ -9,15 +9,16 @@ productImages:
   - "/mini_aire_acondicionado/aire3.png"
   - "/mini_aire_acondicionado/aire4.png"
 descriptionParagraphs:
-  - "¡Olvidate del calor insoportable!"
-  - "El Mini Aire Acondicionado Portátil es tu solución perfecta para mantener un ambiente fresco y agradable donde quiera que estés. Compacto, eficiente y fácil de usar."
-
-  - "El Mini Aire Acondicionado es perfecto para quienes buscan un ambiente fresco y cómodo en cualquier lugar. Con una altura de 25 cm y un peso de 0.35 kg, este climatizador portátil es fácil de mover y colocar en cualquier habitación, oficina o incluso durante tus viajes. Su diseño compacto y elegante se adapta a cualquier entorno, brindando un toque moderno y funcional."
+  - "Mini Aire Acondicionado Portátil con 50% OFF y Envío Gratis a Todo Chile"
+  - "Olvídate de temperaturas sofocantes. Obtén frescura instantánea y sin complicaciones, ya sea en tu hogar, tu oficina o durante tus viajes."
+  - "3 en 1: Ventilador, Humidificador y Aromatizador (difusor de fragancias) para refrescar, hidratar y dar un toque agradable al ambiente."
   - "1. Llena el tanque con agua fría y, si deseas máxima potencia, añade hielo"
   - "2. Conecta o enciende el dispositivo (puede funcionar con cable USB o con su batería interna)"
   - "3. Presiona el botón de encendido"
   - "4. Ajusta la velocidad de ventilación según tu preferencia"
   - "5. Disfruta del aire fresco, purificado y perfumado"
+  - "¡No dejes que el calor te gane la batalla!"
+  - "Haz clic en “Comprar Ahora” y disfruta de un verano fresco, cómodo y con un ambiente agradable en todo momento."
 
 specifications:
   - "Dimensiones aproximadas: 14.5 x 14.5 x 14.5 cm / Altura total 25 cm"
