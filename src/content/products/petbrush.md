@@ -1,6 +1,6 @@
 ---
 title: "PetBrush™ - Cepillo Eléctrico para Mascotas"
-price: 19990
+price: 18990
 oldPrice: 26990
 productImages:
   - "/petbrush/petbrush1.webp"
