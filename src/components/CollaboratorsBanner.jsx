@@ -2,6 +2,7 @@ import React from 'react';
 
 export default function CollaboratorsBanner() {
   const collaborators = [
+    { src: '/colaboradores/cuentarut.png', alt: 'Cuenta Rut' },
     { src: '/colaboradores/bluexpress.png', alt: 'Bluexpress' },
     { src: '/colaboradores/mercadopago.jpg', alt: 'MercadoPago' },
     { src: '/colaboradores/visa_master.png', alt: 'Visa y Mastercard' },

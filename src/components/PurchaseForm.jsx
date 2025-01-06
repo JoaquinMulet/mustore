@@ -674,9 +674,9 @@ export default function PurchaseForm({ productTitle, productPrice }) {
       {showExitPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
           <div className="bg-white p-8 rounded-xl shadow-2xl max-w-md mx-4 relative transform transition-all duration-300">
-            {/* Icono de regalo animado */}
+            {/* Icono de regalo sin animación */}
             <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
-              <div className="animate-bounce">
+              <div>
                 <span className="text-6xl">🎁</span>
               </div>
             </div>

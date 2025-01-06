@@ -55,13 +55,30 @@ function processMarkdown(text: string) {
     }
     */
     @keyframes shine {
-      0% {
-        background-position: -200% 50%;
-      }
-      100% {
-        background-position: 200% 50%;
-      }
+      0% { background-position: -200% 50%; }
+      100% { background-position: 200% 50%; }
     }
+
+    @keyframes truck {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(4px); }
+    }
+
+    @keyframes cart {
+      0%, 100% { transform: translateX(0) rotate(0); }
+      25% { transform: translateX(-2px) rotate(-5deg); }
+      75% { transform: translateX(2px) rotate(5deg); }
+    }
+
+    @keyframes gift {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .animate-truck { animation: truck 2s ease-in-out infinite; }
+    .animate-cart { animation: cart 2s ease-in-out infinite; }
+    .animate-gift { animation: gift 2s ease-in-out infinite; }
+    .animate-shine { animation: shine 3s linear infinite; }
 
     @keyframes glow {
       0% {
@@ -107,6 +124,27 @@ function processMarkdown(text: string) {
       50% {
         text-shadow: 0 0 16px rgba(255, 255, 255, 0.9),
                      0 0 20px rgba(255, 255, 255, 0.7);
+      }
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+      }
+    }
+
+    @keyframes scale-attention {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
       }
     }
 
@@ -176,6 +214,30 @@ function processMarkdown(text: string) {
     .text-glow {
       animation: textGlow 2s ease-in-out infinite;
     }
+
+    .animate-truck {
+      animation: truck 2s ease-in-out infinite;
+    }
+
+    .animate-cart {
+      animation: cart 2s ease-in-out infinite;
+    }
+
+    .animate-gift {
+      animation: gift 2s ease-in-out infinite;
+    }
+
+    .animate-scale-attention {
+      animation: scale-attention 2s ease-in-out infinite;
+    }
+
+    .animate-pulse-ring {
+      animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .animate-shine {
+      animation: shine 3s linear infinite;
+    }
   </style>
 
   <div class="max-w-[980px] mx-auto px-4 py-8 md:py-16">
@@ -191,27 +253,50 @@ function processMarkdown(text: string) {
         <h1 class="text-3xl md:text-4xl font-bold mb-6">{title}</h1>
 
         <!-- Precio y Botón de Compra -->
-        <div class="flex flex-col md:flex-row items-start md:items-center gap-4 mb-6">
-          <div class="flex items-baseline">
-            <span class="text-3xl md:text-4xl font-bold text-red-600">
-              ${price.toLocaleString('es-CL')}
-            </span>
-            {oldPrice && (
-              <>
-                <span class="ml-4 text-xl text-gray-500 line-through">
-                  ${oldPrice.toLocaleString('es-CL')}
-                </span>
-                <span class="ml-2 bg-green-500 text-white px-2 py-1 rounded-full text-sm font-bold">
-                  {Math.round(((oldPrice - price) / oldPrice) * 100)}% OFF
-                </span>
-              </>
-            )}
+        <div class="flex flex-col gap-4 mb-6">
+          <!-- Precio y envío -->
+          <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-baseline flex-wrap gap-2">
+              <span class="text-3xl md:text-4xl font-bold text-red-600">
+                ${price.toLocaleString('es-CL')}
+              </span>
+              {oldPrice && (
+                <>
+                  <span class="text-xl text-gray-500 line-through">
+                    ${oldPrice.toLocaleString('es-CL')}
+                  </span>
+                  <span class="bg-green-500 text-white px-2 py-1 rounded-full text-sm font-bold">
+                    {Math.round(((oldPrice - price) / oldPrice) * 100)}% OFF
+                  </span>
+                </>
+              )}
+            </div>
+            <div class="flex items-center gap-2 bg-red-50 border-2 border-red-200 rounded-lg px-4 py-2">
+              <span class="text-red-600 font-bold animate-truck">🚚</span>
+              <span class="text-red-600 font-bold tracking-wide">¡ENVÍO GRATIS!</span>
+            </div>
           </div>
+
           <button
             id="openPurchaseModal"
-            class="w-full md:w-auto text-white py-4 px-8 rounded-lg text-xl font-bold bg-red-600 hover:bg-red-700 transform hover:scale-105 transition-all duration-200 shadow-md animate-bounce flex items-center justify-center gap-3"
+            class="group w-full text-white py-4 px-8 rounded-lg text-xl font-bold bg-gradient-to-r from-red-500 via-red-600 to-red-500 hover:from-red-600 hover:via-red-700 hover:to-red-600 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl relative overflow-hidden flex items-center justify-center"
           >
-            <span class="text-glow whitespace-nowrap tracking-wide uppercase">¡Comprar Ahora!</span>
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 animate-shine"></div>
+            <div class="absolute inset-0 animate-pulse-ring"></div>
+            <div class="flex flex-col items-center relative">
+              <div class="flex items-center gap-3 animate-scale-attention">
+                <span class="animate-cart">🛒</span>
+                <span class="text-glow whitespace-nowrap tracking-wide uppercase">
+                  ¡COMPRAR AHORA!
+                </span>
+                <span class="animate-gift">🎁</span>
+              </div>
+              <div class="flex items-center gap-2 text-sm mt-1">
+                <span class="animate-pulse">⚡</span>
+                <span class="font-medium opacity-90">¡Últimas unidades!</span>
+                <span class="animate-pulse">⚡</span>
+              </div>
+            </div>
           </button>
         </div>
 
