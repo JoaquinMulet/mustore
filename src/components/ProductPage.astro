@@ -336,27 +336,15 @@ function processMarkdown(text: string) {
     )}
 
     <!-- Modal de compra -->
-    <div id="purchaseModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-      <div
-        class="bg-white rounded-2xl w-full max-w-md m-4 overflow-y-auto relative"
-        style="max-height: calc(100vh - 2rem);"
-      >
-        <button
-          id="closePurchaseModal"
-          class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-        <div class="p-6">
-          <PurchaseForm client:load productTitle={title} productPrice={price} />
+    <div id="purchaseModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[9999]">
+      <div class="fixed inset-0 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto relative">
+          <button class="close-modal absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <PurchaseForm productTitle={title} productPrice={price} client:load />
         </div>
       </div>
     </div>
@@ -366,56 +354,35 @@ function processMarkdown(text: string) {
     // Acordeones
     window.toggleAccordion = (button) => {
       const content = button.nextElementSibling;
-      const icon = button.querySelector('svg');
-      content.classList.toggle('hidden');
-      icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
-    }
+      content.style.display = content.style.display === 'none' ? 'block' : 'none';
+    };
 
-    // Modal de compra
-    const modal = document.getElementById('purchaseModal');
-    const openButton = document.getElementById('openPurchaseModal');
-    const closeButton = document.getElementById('closePurchaseModal');
+    // Modal
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('purchaseModal');
+      const openButton = document.getElementById('openPurchaseModal');
+      const closeButtons = document.querySelectorAll('.close-modal');
 
-    openButton.addEventListener('click', () => {
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      document.body.style.overflow = 'hidden';
-
-      // Rastrear evento InitiateCheckout con los valores dinámicos
-      if (typeof window !== 'undefined' && window.fbq) {
-        window.fbq('track', 'InitiateCheckout', {
-          content_name: title,
-          content_type: 'product',
-          content_ids: [title],
-          value: price,
-          currency: 'CLP'
+      if (openButton) {
+        openButton.addEventListener('click', () => {
+          if (modal) modal.style.display = 'block';
         });
       }
-    });
 
-    closeButton.addEventListener('click', () => {
-      modal.classList.remove('flex');
-      modal.classList.add('hidden');
-      document.body.style.overflow = 'auto';
-    });
-
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.classList.remove('flex');
-        modal.classList.add('hidden');
-        document.body.style.overflow = 'auto';
-      }
-    });
-
-    // Inicializar el evento ViewContent cuando se carga la página
-    if (typeof window !== 'undefined' && window.fbq) {
-      window.fbq('track', 'ViewContent', {
-        content_name: title,
-        content_type: 'product',
-        content_ids: [title],
-        value: price,
-        currency: 'CLP'
+      closeButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (typeof window.handleFormClose === 'function') {
+            window.handleFormClose();
+          }
+        });
       });
-    }
+
+      window.addEventListener('click', (e) => {
+        if (e.target === modal && typeof window.handleFormClose === 'function') {
+          window.handleFormClose();
+        }
+      });
+    });
   </script>
 </Layout>

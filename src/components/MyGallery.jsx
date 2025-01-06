@@ -103,16 +103,18 @@ export default function MyGallery({ productImages, title }) {
         </div>
       </div>
 
-      {/* Dots (paginación) con preview en hover */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-10">
-        {productImages.map((img, idx) => (
+      {/* Puntos de navegación */}
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-[1]">
+        {productImages.map((_, index) => (
           <button
-            key={idx}
-            onClick={() => handleDotClick(idx)}
-            className={`
-              w-3 h-3 rounded-full transition-all duration-300
-              ${idx === currentIndex ? 'bg-blue-600 scale-125' : 'bg-gray-300 hover:bg-blue-400'}
-            `}
+            key={index}
+            onClick={() => handleDotClick(index)}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              index === currentIndex
+                ? 'bg-blue-600 w-4'
+                : 'bg-gray-400 hover:bg-gray-600'
+            }`}
+            aria-label={`Ir a la imagen ${index + 1}`}
           />
         ))}
       </div>

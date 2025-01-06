@@ -1,5 +1,5 @@
 ---
-title: "SmartTune One | MuStore "
+title: "SmartTune One"
 price: 29990
 oldPrice: 59990
 productImages:
