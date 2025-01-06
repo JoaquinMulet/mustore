@@ -75,11 +75,6 @@ function processMarkdown(text: string) {
       50% { transform: translateY(-4px); }
     }
 
-    .animate-truck { animation: truck 2s ease-in-out infinite; }
-    .animate-cart { animation: cart 2s ease-in-out infinite; }
-    .animate-gift { animation: gift 2s ease-in-out infinite; }
-    .animate-shine { animation: shine 3s linear infinite; }
-
     @keyframes glow {
       0% {
         box-shadow: 0 0 5px rgba(220, 38, 38, 0.5),
@@ -148,88 +143,10 @@ function processMarkdown(text: string) {
       }
     }
 
-    .pulsate-button {
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-      animation: glow 3s ease-in-out infinite, pulse 2s ease-in-out infinite;
-      transition: all 0.3s ease;
-      border: 2px solid rgba(220, 38, 38, 0.5);
-    }
-
-    .pulsate-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 200%;
-      height: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0) 20%,
-        rgba(255, 255, 255, 0.4) 50%,
-        rgba(255, 255, 255, 0) 80%,
-        transparent 100%
-      );
-      animation: shine 3s linear infinite;
-    }
-
-    .pulsate-button::after {
-      content: '';
-      position: absolute;
-      inset: -2px;
-      background: linear-gradient(90deg, #ef4444, #dc2626, #b91c1c);
-      z-index: -1;
-      animation: border-glow 2s linear infinite;
-      border-radius: 9999px;
-      opacity: 0.5;
-    }
-
-    .pulsate-button:hover {
-      transform: translateY(-1px) scale(1.02);
-      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-      box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
-    }
-
-    .pulsate-button:hover::before {
-      animation: shine 2s linear infinite;
-    }
-
-    .pulsate-button:active {
-      transform: translateY(1px);
-    }
-
-    .pulsate-button span,
-    .pulsate-button svg {
-      position: relative;
-      z-index: 1;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
-
-    .pulsate-button svg {
-      filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
-    }
-
-    .text-glow {
-      animation: textGlow 2s ease-in-out infinite;
-    }
-
-    .animate-truck {
-      animation: truck 2s ease-in-out infinite;
-    }
-
-    .animate-cart {
-      animation: cart 2s ease-in-out infinite;
-    }
-
-    .animate-gift {
-      animation: gift 2s ease-in-out infinite;
-    }
-
-    .animate-scale-attention {
-      animation: scale-attention 2s ease-in-out infinite;
-    }
+    .animate-truck { animation: truck 2s ease-in-out infinite; }
+    .animate-cart { animation: cart 2s ease-in-out infinite; }
+    .animate-gift { animation: gift 2s ease-in-out infinite; }
+    .animate-scale-attention { animation: scale-attention 2s ease-in-out infinite; }
 
     .animate-pulse-ring {
       animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -298,134 +215,139 @@ function processMarkdown(text: string) {
               </div>
             </div>
           </button>
-        </div>
 
-        <div class="space-y-4 text-gray-600">
-          {descriptionParagraphs.map((p) => (
-            <p class="text-lg leading-relaxed">{p}</p>
-          ))}
-        </div>
-
-        {/* Banner de Colaboradores */}
-        <CollaboratorsBanner client:load />
-
-        {/* Menús acordeón */}
-        <div class="mt-12 space-y-4">
-          {instructions.length > 0 && (
-            <div class="border border-gray-200 rounded-xl overflow-hidden">
-              <button
-                class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
-                onclick="toggleAccordion(this)"
-              >
-                <span class="text-lg font-semibold">Modo de Uso</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5 transform transition-transform"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              <div class="hidden px-6 py-4 bg-gray-50">
-                <ul class="list-disc list-inside space-y-2 text-gray-600">
-                  {instructions.map((instruction) => (
-                    <p set:html={processMarkdown(instruction)} />
-                  ))}
-                </ul>
-              </div>
-            </div>
-          )}
-
-          {shipping.length > 0 && (
-            <div class="border border-gray-200 rounded-xl overflow-hidden">
-              <button
-                class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
-                onclick="toggleAccordion(this)"
-              >
-                <span class="text-lg font-semibold">Envío</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5 transform transition-transform"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              <div class="hidden px-6 py-4 bg-gray-50">
-                <div class="space-y-2 text-gray-600">
-                  {shipping.map((item) => (
-                    <p set:html={processMarkdown(item)} />
-                  ))}
+          {reviews.length > 0 && (
+            <>
+              <div class="flex items-center justify-center gap-4 mt-6 py-3 px-4 bg-gradient-to-r from-gray-50/50 via-white to-gray-50/50 rounded-lg hover:shadow-sm transition-all duration-300">
+                <div class="flex items-center space-x-2">
+                  <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-yellow-400">
+                    {(reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length).toFixed(1)}
+                  </span>
+                  <div class="flex items-center space-x-0.5">
+                    {Array.from({ length: 5 }, (_, i) => {
+                      const averageRating = reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
+                      return (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.round(averageRating) ? 'text-yellow-400' : 'text-gray-200'}`}
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div class="w-px h-8 bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
+                <div class="flex items-center space-x-1">
+                  <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <span class="text-sm">
+                    <span class="font-medium text-gray-700">{reviews.length}</span>
+                    <span class="text-gray-500 ml-1">{reviews.length === 1 ? 'opinión' : 'opiniones'} validadas</span>
+                  </span>
                 </div>
               </div>
-            </div>
+              <div class="w-full mt-4 border-b border-gray-200 opacity-50" style="background: linear-gradient(to right, transparent, #e5e7eb 35%, #e5e7eb 65%, transparent);"></div>
+            </>
           )}
 
-          {warranty && warranty.length > 0 && (
-            <div class="border border-gray-200 rounded-xl overflow-hidden">
-              <button
-                class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
-                onclick="toggleAccordion(this)"
-              >
-                <span class="text-lg font-semibold">Garantía</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5 transform transition-transform"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+          <div class="space-y-4 text-gray-600">
+            {descriptionParagraphs.map((p) => (
+              <p class="text-lg leading-relaxed">{p}</p>
+            ))}
+          </div>
+
+          {/* Banner de Colaboradores */}
+          <CollaboratorsBanner client:load />
+
+          {/* Menús acordeón */}
+          <div class="mt-12 space-y-4">
+            {instructions.length > 0 && (
+              <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button
+                  class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
+                  onclick="toggleAccordion(this)"
                 >
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              <div class="hidden px-6 py-4 bg-gray-50">
-                <div class="space-y-2 text-gray-600">
-                  {warranty.map((item) => (
-                    <p set:html={processMarkdown(item)} />
-                  ))}
+                  <span class="text-lg font-semibold">Modo de Uso</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 transform transition-transform"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <div class="hidden px-6 py-4 bg-gray-50">
+                  <ul class="list-disc list-inside space-y-2 text-gray-600">
+                    {instructions.map((instruction) => (
+                      <p set:html={processMarkdown(instruction)} />
+                    ))}
+                  </ul>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+
+            {shipping.length > 0 && (
+              <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button
+                  class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
+                  onclick="toggleAccordion(this)"
+                >
+                  <span class="text-lg font-semibold">Envío</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 transform transition-transform"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <div class="hidden px-6 py-4 bg-gray-50">
+                  <div class="space-y-2 text-gray-600">
+                    {shipping.map((item) => (
+                      <p set:html={processMarkdown(item)} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {warranty && warranty.length > 0 && (
+              <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button
+                  class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
+                  onclick="toggleAccordion(this)"
+                >
+                  <span class="text-lg font-semibold">Garantía</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 transform transition-transform"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <div class="hidden px-6 py-4 bg-gray-50">
+                  <div class="space-y-2 text-gray-600">
+                    {warranty.map((item) => (
+                      <p set:html={processMarkdown(item)} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
-
-    <!-- Reseñas -->
-    {reviews.length > 0 && (
-      <div class="mt-16 pt-8 border-t">
-        <h2 class="text-2xl font-bold mb-8">Reseñas de Clientes</h2>
-        <div class="grid md:grid-cols-2 gap-6">
-          {reviews.map((review) => (
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-              <div class="flex items-center mb-4">
-                <div class="flex-1">
-                  <h3 class="font-semibold">{review.name}</h3>
-                  <p class="text-sm text-gray-500">{review.date}</p>
-                </div>
-                <div class="flex gap-1">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class={`h-5 w-5 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`}
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-              </div>
-              <p class="text-gray-600">{review.text}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    )}
 
     <!-- Modal de compra -->
     <div id="purchaseModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[9999]">
@@ -436,6 +358,31 @@ function processMarkdown(text: string) {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
+          {reviews.length > 0 && (
+            <div class="flex items-center gap-4 mb-4">
+              <div class="flex items-center">
+                {Array.from({ length: 5 }, (_, i) => {
+                  const averageRating = reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
+                  return (
+                    <svg
+                      class={`w-5 h-5 ${i < Math.round(averageRating) ? 'text-yellow-400' : 'text-gray-300'}`}
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  );
+                })}
+              </div>
+              <span class="text-sm font-medium text-gray-600">
+                {(reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length).toFixed(1)}
+              </span>
+              <span class="text-sm text-gray-500">
+                ({reviews.length} {reviews.length === 1 ? 'reseña' : 'reseñas'})
+              </span>
+            </div>
+          )}
           <PurchaseForm productTitle={title} productPrice={price} client:load />
         </div>
       </div>
