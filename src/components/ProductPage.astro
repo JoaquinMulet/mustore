@@ -1,7 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PurchaseForm from '../components/PurchaseForm.jsx';
-import MyGallery from '../components/MyGallery.jsx'; // <--- Importamos el carrusel casero
+import MyGallery from '../components/MyGallery.jsx'; 
+import CollaboratorsBanner from '../components/CollaboratorsBanner.jsx';
 import { marked } from 'marked';
 
 interface Review {
@@ -64,28 +65,28 @@ function processMarkdown(text: string) {
 
     @keyframes glow {
       0% {
-        box-shadow: 0 0 5px rgba(37, 99, 235, 0.5),
-                   0 0 15px rgba(37, 99, 235, 0.3),
+        box-shadow: 0 0 5px rgba(220, 38, 38, 0.5),
+                   0 0 15px rgba(220, 38, 38, 0.3),
                    inset 0 0 5px rgba(255, 255, 255, 0.1);
       }
       50% {
-        box-shadow: 0 0 15px rgba(37, 99, 235, 0.7),
-                   0 0 25px rgba(37, 99, 235, 0.5),
+        box-shadow: 0 0 15px rgba(220, 38, 38, 0.7),
+                   0 0 25px rgba(220, 38, 38, 0.5),
                    inset 0 0 10px rgba(255, 255, 255, 0.2);
       }
       100% {
-        box-shadow: 0 0 5px rgba(37, 99, 235, 0.5),
-                   0 0 15px rgba(37, 99, 235, 0.3),
+        box-shadow: 0 0 5px rgba(220, 38, 38, 0.5),
+                   0 0 15px rgba(220, 38, 38, 0.3),
                    inset 0 0 5px rgba(255, 255, 255, 0.1);
       }
     }
 
     @keyframes border-glow {
       0%, 100% {
-        border-color: rgba(37, 99, 235, 0.5);
+        border-color: rgba(220, 38, 38, 0.5);
       }
       50% {
-        border-color: rgba(96, 165, 250, 0.8);
+        border-color: rgba(239, 68, 68, 0.8);
       }
     }
 
@@ -98,13 +99,24 @@ function processMarkdown(text: string) {
       }
     }
 
+    @keyframes textGlow {
+      0%, 100% {
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.7),
+                     0 0 12px rgba(255, 255, 255, 0.5);
+      }
+      50% {
+        text-shadow: 0 0 16px rgba(255, 255, 255, 0.9),
+                     0 0 20px rgba(255, 255, 255, 0.7);
+      }
+    }
+
     .pulsate-button {
       position: relative;
       overflow: hidden;
-      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
       animation: glow 3s ease-in-out infinite, pulse 2s ease-in-out infinite;
       transition: all 0.3s ease;
-      border: 2px solid rgba(37, 99, 235, 0.5);
+      border: 2px solid rgba(220, 38, 38, 0.5);
     }
 
     .pulsate-button::before {
@@ -129,7 +141,7 @@ function processMarkdown(text: string) {
       content: '';
       position: absolute;
       inset: -2px;
-      background: linear-gradient(90deg, #60a5fa, #3b82f6, #2563eb);
+      background: linear-gradient(90deg, #ef4444, #dc2626, #b91c1c);
       z-index: -1;
       animation: border-glow 2s linear infinite;
       border-radius: 9999px;
@@ -138,8 +150,8 @@ function processMarkdown(text: string) {
 
     .pulsate-button:hover {
       transform: translateY(-1px) scale(1.02);
-      background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-      box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
     }
 
     .pulsate-button:hover::before {
@@ -160,6 +172,10 @@ function processMarkdown(text: string) {
     .pulsate-button svg {
       filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
     }
+
+    .text-glow {
+      animation: textGlow 2s ease-in-out infinite;
+    }
   </style>
 
   <div class="max-w-[980px] mx-auto px-4 py-8 md:py-16">
@@ -177,7 +193,7 @@ function processMarkdown(text: string) {
         <!-- Precio y Botón de Compra -->
         <div class="flex flex-col md:flex-row items-start md:items-center gap-4 mb-6">
           <div class="flex items-baseline">
-            <span class="text-3xl md:text-4xl font-bold text-blue-600">
+            <span class="text-3xl md:text-4xl font-bold text-red-600">
               ${price.toLocaleString('es-CL')}
             </span>
             {oldPrice && (
@@ -193,21 +209,9 @@ function processMarkdown(text: string) {
           </div>
           <button
             id="openPurchaseModal"
-            class="w-full md:w-auto text-white py-4 px-8 rounded-full text-lg font-semibold transition-all flex items-center justify-center gap-3 pulsate-button select-none"
+            class="w-full md:w-auto text-white py-4 px-8 rounded-lg text-xl font-bold bg-red-600 hover:bg-red-700 transform hover:scale-105 transition-all duration-200 shadow-md animate-bounce flex items-center justify-center gap-3"
           >
-            <span class="whitespace-nowrap">Comprar ahora</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clip-rule="evenodd"
-              />
-            </svg>
+            <span class="text-glow whitespace-nowrap tracking-wide uppercase">¡Comprar Ahora!</span>
           </button>
         </div>
 
@@ -217,7 +221,10 @@ function processMarkdown(text: string) {
           ))}
         </div>
 
-        <!-- Acordeones -->
+        {/* Banner de Colaboradores */}
+        <CollaboratorsBanner client:load />
+
+        {/* Menús acordeón */}
         <div class="mt-12 space-y-4">
           {instructions.length > 0 && (
             <div class="border border-gray-200 rounded-xl overflow-hidden">
