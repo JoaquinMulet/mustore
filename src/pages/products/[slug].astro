@@ -24,11 +24,11 @@ const title = `${product.data.title} | MuStore`;
   productImages={product.data.productImages}
   price={product.data.price}
   oldPrice={product.data.oldPrice}
-  descriptionParagraphs={product.data.descriptionParagraphs}
-  reviews={product.data.reviews}
-  instructions={product.data.instructions}
-  shipping={product.data.shipping}
-  warranty={product.data.warranty}
+  descriptionParagraphs={product.data.descriptionParagraphs || []}
+  reviews={product.data.reviews || []}
+  instructions={product.data.instructions || []}
+  shipping={product.data.shipping || []}
+  warranty={product.data.warranty || []}
 >
   <Content />
 </ProductPage>
