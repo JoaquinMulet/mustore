@@ -162,6 +162,13 @@ declare module 'astro:content' {
   collection: "products";
   data: InferEntrySchema<"products">
 } & { render(): Render[".md"] };
+"sleeping_sound.md": {
+	id: "sleeping_sound.md";
+  slug: "sleeping_sound";
+  body: string;
+  collection: "products";
+  data: InferEntrySchema<"products">
+} & { render(): Render[".md"] };
 "smarttuneone.md": {
 	id: "smarttuneone.md";
   slug: "smarttuneone";
