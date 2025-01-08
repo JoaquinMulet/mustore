@@ -10,19 +10,33 @@ productImages:
   - "/antifaz/antifaz5.jpeg"
 
 descriptionParagraphs:
-  - "💤ANTIFAZ CON AUDÍFONOS PARA DORMIR💤\n😩¿TIENES PROBLEMAS PARA DORMIR EN UN AMBIENTE RUIDOSO?😩\nNuestro ANTIFAZ CON AUDÍFONOS PARA DORMIR es la solución perfecta para un sueño profundo y reparador. Con nuestro diseño ergonómico y los audífonos incorporados, podrás disfrutar de una noche de sueño sin interrupciones."
-  - "🤩NOCHES TRANQUILAS🤩\nEl antifaz con audífonos para dormir te brinda la oportunidad de disfrutar de un sueño reparador. Gracias a la combinación de la oscuridad y el sonido envolvente, te sumergirás en un estado de relajación total que te permitirá descansar profundamente durante toda la noche."
-  - "💢AJUSTABLE💢\nEste antifaz es perfecto para cualquier tamaño de cabeza. Su diseño innovador y ajustable permite que se adapte a cualquier forma y tamaño, asegurando una comodidad inigualable sin importar tus necesidades individuales."
-  - "🎶AÍSLA EL RUIDO🎶\nEl antifaz con audífonos para dormir está diseñado para aislar el ruido ambiental y proporcionar un entorno tranquilo para dormir. Ya sea que vivas en una calle concurrida o que te encuentres en un ambiente ruidoso, este antifaz bloqueará los sonidos externos para que puedas disfrutar de un sueño profundo y reparador."
-  - "👌FÁCIL DE USAR👌\nPodrás conectarlo fácilmente por medio de tecnología Bluetooth y disfrutar de una carga de hasta 2 horas y media. Bloquea eficazmente las luces provenientes de la zona de la nariz brindándote un sueño profundo en todas partes."
+- "Mantén tu descanso como prioridad con nuestro revolucionario antifaz con audífonos Bluetooth, diseñado para mejorar tus noches y transformar tu rutina nocturna. Este producto combina comodidad, tecnología y versatilidad para ofrecerte mucho más que un sueño reparador."
+- "PRODUCTO RECOMENDADO POR PROFESIONALES"
+- "✨ Beneficios que no puedes dejar pasar:"
 
+- "💤 Dormir mejor que nunca: Mantén tu sueño profundo y sin interrupciones bloqueando el ruido y la luz para un descanso inigualable."
+- "🎶 Escucha mientras duermes: Relájate con tus playlists, sonidos de meditación o podcasts favoritos sin necesidad de auriculares incómodos."
+- "🌙 Perfecto para la noche: Mantén la comodidad mientras revisas tus redes sociales o lees en la cama sin molestar a los demás."
+- "🛌 Ideal para cualquier lugar: Ya sea en casa, en un avión o en un viaje, nuestro antifaz te acompaña para asegurar un descanso de calidad dondequiera que estés."
+- "😌 Relajación total: Estimula un ambiente relajante para reducir el estrés y conciliar el sueño rápidamente."
+- "✅ Por qué elegirlo:"
+- "Material suave y ultra cómodo que se adapta perfectamente a tu rostro."
+- "Aísla el ruido exterior y bloquea la luz por completo para maximizar tu relajación."
+- "Audífonos Bluetooth integrados de alta calidad para una experiencia de sonido inmersiva."
+- "Fácil de lavar, mantener y reutilizar para garantizar su durabilidad."
+- "Diseño ligero y ergonómico, ideal para largas noches de uso o siestas rápidas."
+- "Mantén tus noches tranquilas, tu mente relajada y tus días llenos de energía. Haz que el descanso sea una prioridad con nuestro antifaz con audífonos Bluetooth."
+- "👉 ¡Pruébalo hoy y transforma tus noches en una experiencia única!"
 instructions:
-  - "**¿POR QUÉ DEBERÍAS TENER ESTE ANTIFAZ CON AUDÍFONOS?**"
-  - "💤Podrás disfrutar de una noche de sueño profundo y sin interrupciones."
-  - "💤Se adapta fácilmente a cualquier cabeza."
-  - "💤Podrás conectarlo a tu celular y escoger la música que más te guste."
-  - "💤No tendrás que usar auriculares adicionales."
-  - "💤Es perfecto para llevar en viajes largos."
+- "**Conéctalo fácilmente por Bluetooth:** Empareja el antifaz con tu dispositivo móvil en segundos para disfrutar de tus sonidos favoritos."
+
+- "**Ajusta el antifaz a tu medida:** Usa la correa ajustable para asegurarte de que quede cómodo y bien colocado sobre tus ojos."
+
+- "**Elige tu música o sonidos:** Reproduce música relajante, meditaciones guiadas o sonidos naturales directamente desde tu teléfono."
+
+- "**Ponte cómodo y relájate:** Coloca el antifaz sobre tus ojos, bloquea la luz y el ruido exterior, y disfruta de un sueño reparador."
+
+- "**Recarga fácilmente:** Después de usarlo, cárgalo por completo en 2.5 horas para que esté listo para la próxima noche."
   
 shipping:
   - "**Envío Gratis a Todo Chile**"
