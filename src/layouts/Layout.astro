@@ -52,55 +52,45 @@ const { title } = Astro.props;
 
   <body class="min-h-screen bg-white flex flex-col font-satoshi">
     <header class="fixed w-full bg-white/90 backdrop-blur-md z-50">
-      <nav
-        class="max-w-[980px] mx-auto px-4 h-[44px] flex items-center justify-between text-sm"
-      >
+      <nav class="max-w-[980px] mx-auto px-4 h-[44px] flex items-center justify-between text-sm">
         <div class="hidden md:flex items-center space-x-8">
-          <a
-            href="/"
-            class="text-gray-900 hover:text-gray-600 transition-colors"
-            >Home</a
-          >
-          <a
-            href="/about"
-            class="text-gray-900 hover:text-gray-600 transition-colors"
-            >Nosotros</a
-          >
+          <a href="/" class="text-gray-900 hover:text-gray-600 transition-colors">Home</a>
+          <a href="/about" class="text-gray-900 hover:text-gray-600 transition-colors">Nosotros</a>
         </div>
 
-        <a
-          href="/"
-          class="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-1"
-          aria-label="MuStore Home"
-        >
+        <a href="/" class="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-1">
           <span class="text-2xl font-bold">μ</span>
           <span class="font-['Satoshi'] text-lg tracking-wide">Store</span>
         </a>
 
         <div class="flex-1 flex justify-end">
-          <!-- Mobile menu button -->
-          <button
-            class="md:hidden text-gray-900"
-            id="mobile-menu-button"
-            aria-label="Menu"
-          >
-            <svg
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+          <button class="md:hidden p-2" id="mobile-menu-button">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
           </button>
         </div>
       </nav>
+
+      <!-- Mobile menu -->
+      <div class="hidden" id="mobile-menu">
+        <div class="px-4 py-2">
+          <a href="/" class="block py-2 text-gray-900 hover:bg-gray-50">Home</a>
+          <a href="/about" class="block py-2 text-gray-900 hover:bg-gray-50">Nosotros</a>
+        </div>
+      </div>
     </header>
+
+    <script is:inline>
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+    </script>
 
     <main class="flex-grow">
       <slot />
@@ -154,25 +144,25 @@ const { title } = Astro.props;
         </div>
       </div>
     </footer>
+
+    <style is:global>
+      :root {
+        --accent: 136, 58, 234;
+        --accent-light: 224, 204, 250;
+        --accent-dark: 49, 10, 101;
+        --accent-gradient: linear-gradient(
+          45deg,
+          rgb(var(--accent)),
+          rgb(var(--accent-light)) 30%,
+          white 60%
+        );
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+    </style>
   </body>
 </html>
-
-<style is:global>
-  :root {
-    --accent: 136, 58, 234;
-    --accent-light: 224, 204, 250;
-    --accent-dark: 49, 10, 101;
-    --accent-gradient: linear-gradient(
-      45deg,
-      rgb(var(--accent)),
-      rgb(var(--accent-light)) 30%,
-      white 60%
-    );
-  }
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-</style>
