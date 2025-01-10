@@ -59,9 +59,36 @@ function processMarkdown(text: string) {
   });
 }
 
+// Crear datos estructurados para Google Shopping
+const productSchema = {
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": title,
+  "image": productImages,
+  "description": descriptionParagraphs.join(" "),
+  "brand": {
+    "@type": "Brand",
+    "name": "MuStore"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": Astro.url.href,
+    "priceCurrency": "CLP",
+    "price": price,
+    "priceValidUntil": new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(),
+    "availability": "https://schema.org/InStock"
+  },
+  "aggregateRating": reviews.length > 0 ? {
+    "@type": "AggregateRating",
+    "ratingValue": (reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length).toFixed(1),
+    "reviewCount": reviews.length
+  } : undefined
+};
+
 ---
 
 <Layout title={title}>
+  <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
   <style is:global>
     @keyframes shine {
       0% { background-position: -200% 50%; }
@@ -156,7 +183,6 @@ function processMarkdown(text: string) {
 
         <!-- Acordeón de Información -->
         <ProductAccordion 
-          descriptionParagraphs={descriptionParagraphs}
           specifications={specifications}
           shipping={shipping}
           warranty={warranty}
