@@ -172,10 +172,10 @@ function processMarkdown(text: string) {
   </div>
 
   <!-- Modal de compra -->
-  <div id="purchaseModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[9999] overflow-hidden">
-    <div class="fixed inset-0 flex items-center justify-center p-4">
-      <div class="bg-white rounded-lg max-w-md w-full max-h-[90vh] relative">
-        <button class="close-modal absolute -top-3 -right-3 bg-white rounded-full p-1 shadow-lg text-gray-500 hover:text-gray-700 z-[9999]">
+  <div id="purchaseModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[9999] overflow-y-auto">
+    <div class="min-h-screen px-4 flex items-center justify-center">
+      <div class="bg-white rounded-lg max-w-md w-full relative my-8">
+        <button class="close-modal absolute -top-3 -right-3 bg-white rounded-full p-2 shadow-lg text-gray-500 hover:text-gray-700 z-[9999] flex items-center justify-center">
           <span class="sr-only">Cerrar</span>
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
