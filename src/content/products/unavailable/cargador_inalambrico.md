@@ -1,7 +1,10 @@
 ---
 title: "Cargador Powerbank Inalámbrico 3 En 1"
-price: 25990
-oldPrice: 44990
+price: 10990
+price_1: 10990
+price_2: 11990
+price_3: 19990
+oldPrice: 26990
 productImages:
   - "/cargador-powerbank/cargador1.png"
   - "/cargador-powerbank/cargador2.png"
@@ -32,14 +35,9 @@ instructions:
     Al seguir estos simples pasos, podrás disfrutar de una experiencia de carga segura, rápida y sin complicaciones. ¡Listo para simplificar tu rutina diaria!
 
 shipping:
-  - |
-    Entendemos lo importante que es recibir tus productos rápido y con confianza, por eso ofrecemos un servicio de entrega ágil y seguro a cualquier lugar del país.
-
-  - |
-    Tu Cargador Powerbank Inalámbrico 3 En 1 llegará en solo 2 a 3 días hábiles, asegurándonos de cumplir con los plazos prometidos.
-
-  - |
-    Además, para tu mayor comodidad, contamos con la opción de pago contra entrega: **paga únicamente cuando tengas el producto en tus manos, sin complicaciones ni preocupaciones**.
+  - "**Envío Express a Todo Chile**"
+  - "Tiempo estimado de entrega: 2-7 días hábiles"
+  - "Seguimiento en tiempo real disponible"
 
 warranty: 
   - "El Cargador Powerbank Inalámbrico 3 En 1 incluye una garantía de satisfacción de 30 días. Si tienes alguna duda o inconveniente, nuestro equipo de soporte estará disponible para ayudarte a través de WhatsApp."

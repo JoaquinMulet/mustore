@@ -2,19 +2,21 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
-const products = await getCollection('products');
+// Obtener solo los productos disponibles (no en la carpeta unavailable)
+const products = (await getCollection('products')).filter(product => !product.id.includes('unavailable/'));
+
 ---
 
-<Layout title="MuStore | Accesorios Premium para Smartphones">
+<Layout title="MuStore | Productos Premium para Mascotas">
   <!-- Hero Section -->
   <section class="relative h-[80vh] flex items-center justify-center bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100">
     <div class="text-center px-4">
       <h1 class="text-5xl md:text-6xl font-bold mb-6">
-        Aún puedes sorprender<br/>
-        con un regalo mágico.
+        El cuidado que tu mascota<br/>
+        se merece
       </h1>
       <p class="text-xl md:text-2xl mb-8 text-gray-700">
-        Encuentra el regalo perfecto en nuestra colección.
+        Productos premium para el bienestar y felicidad de tu compañero peludo.
       </p>
       <a 
         href="#products" 
@@ -40,10 +42,7 @@ const products = await getCollection('products');
               />
             </div>
             <div class="p-6">
-              <h3 class="text-2xl font-bold mb-2">{product.data.title}</h3>
-              <p class="text-gray-600 mb-4">
-                {product.data.descriptionParagraphs[0]}
-              </p>
+              <h3 class="text-2xl font-bold mb-4">{product.data.title}</h3>
               <div class="flex justify-between items-center">
                 <div class="space-x-2">
                   <span class="text-2xl font-bold">${product.data.price.toLocaleString('es-CL')}</span>

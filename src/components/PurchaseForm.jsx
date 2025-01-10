@@ -1,5 +1,5 @@
 // PurchaseForm.jsx
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import regionesData from '../data/chile_regiones_comunas.json';
 
 export default function PurchaseForm({ productTitle, productPrice }) {
@@ -16,52 +16,89 @@ export default function PurchaseForm({ productTitle, productPrice }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showExitPopup, setShowExitPopup] = useState(false);
   const [hasDiscount, setHasDiscount] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [currentPrice, setCurrentPrice] = useState(productPrice);
   const CURRENCY = 'CLP';
+  const SHIPPING_COST = 7990;
+
+  // Efecto para escuchar cambios en los atributos data-quantity y data-price
+  useEffect(() => {
+    const element = document.querySelector('#purchaseForm');
+    if (element) {
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes') {
+            if (mutation.attributeName === 'data-quantity') {
+              const newQuantity = parseInt(element.getAttribute('data-quantity')) || 1;
+              console.log('Nueva cantidad:', newQuantity);
+              setQuantity(newQuantity);
+            }
+            if (mutation.attributeName === 'data-price') {
+              const newPrice = parseInt(element.getAttribute('data-price'));
+              console.log('Nuevo precio:', newPrice);
+              if (!isNaN(newPrice)) {
+                setCurrentPrice(newPrice);
+              }
+            }
+          }
+        });
+      });
+
+      observer.observe(element, {
+        attributes: true,
+        attributeFilter: ['data-quantity', 'data-price']
+      });
+
+      return () => observer.disconnect();
+    }
+  }, []);
 
   // Calcular precios con descuento
   const calculatePrices = () => {
-    const basePrice = productPrice;
+    console.log('Calculando precios con:', { currentPrice, quantity });
     if (hasDiscount) {
-      const discount = basePrice * 0.1; // 10% de descuento
+      const discount = currentPrice * 0.1; // 10% de descuento
       return {
-        subtotal: basePrice,
+        subtotal: currentPrice,
         discount: discount,
-        total: basePrice - discount
+        shipping: SHIPPING_COST,
+        total: currentPrice - discount + SHIPPING_COST
       };
     }
     return {
-      subtotal: basePrice,
+      subtotal: currentPrice,
       discount: 0,
-      total: basePrice
+      shipping: SHIPPING_COST,
+      total: currentPrice + SHIPPING_COST
     };
   };
 
+  const prices = calculatePrices();
+
   // Función para manejar el cierre del formulario
   const handleCloseForm = () => {
+    console.log('Cerrando formulario, hasDiscount:', hasDiscount);
     if (!hasDiscount) {
+      console.log('Mostrando popup de descuento');
       setShowExitPopup(true);
     } else {
-      // Si ya tiene descuento, cerrar directamente
-      const modal = document.getElementById('purchaseModal');
-      if (modal) {
-        modal.style.display = 'none';
-      }
+      console.log('Cerrando modal directamente');
+      window.closePurchaseModal?.();
     }
   };
 
   // Función para aplicar el descuento
   const applyDiscount = () => {
+    console.log('Aplicando descuento');
     setHasDiscount(true);
     setShowExitPopup(false);
   };
 
-  // Función para cerrar el popup y el formulario
+  // Función para cerrar todo
   const closeAll = () => {
+    console.log('Cerrando todo');
     setShowExitPopup(false);
-    const modal = document.getElementById('purchaseModal');
-    if (modal) {
-      modal.style.display = 'none';
-    }
+    window.closePurchaseModal?.();
   };
 
   // Función segura para llamar a fbq
@@ -82,8 +119,8 @@ export default function PurchaseForm({ productTitle, productPrice }) {
   const [showComunaDropdown, setShowComunaDropdown] = useState(false);
 
   // Refs para detectar clics fuera de los dropdowns
-  const regionListRef = useRef(null);
-  const comunaListRef = useRef(null);
+  const regionListRef = React.createRef(null);
+  const comunaListRef = React.createRef(null);
 
   // Expresiones regulares para validación
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -121,6 +158,44 @@ export default function PurchaseForm({ productTitle, productPrice }) {
     if (typeof window !== 'undefined') {
       window.handleFormClose = handleCloseForm;
     }
+  }, [hasDiscount]);
+
+  // Escuchar el evento de cierre del modal
+  useEffect(() => {
+    const handleModalClose = () => {
+      if (!hasDiscount) {
+        setShowExitPopup(true);
+      } else {
+        window.closePurchaseModal?.();
+      }
+    };
+
+    // Agregar el evento al botón de cerrar
+    const closeButton = document.querySelector('.close-modal');
+    if (closeButton) {
+      closeButton.addEventListener('click', handleModalClose);
+    }
+
+    // Agregar el evento de clic fuera del modal
+    const modal = document.getElementById('purchaseModal');
+    const handleOutsideClick = (e) => {
+      if (e.target === modal) {
+        handleModalClose();
+      }
+    };
+    if (modal) {
+      modal.addEventListener('click', handleOutsideClick);
+    }
+
+    // Limpiar los event listeners
+    return () => {
+      if (closeButton) {
+        closeButton.removeEventListener('click', handleModalClose);
+      }
+      if (modal) {
+        modal.removeEventListener('click', handleOutsideClick);
+      }
+    };
   }, [hasDiscount]);
 
   // Funciones auxiliares
@@ -205,8 +280,9 @@ export default function PurchaseForm({ productTitle, productPrice }) {
       return;
     }
 
-    const subtotal = calculatePrices().subtotal;
-    const total = calculatePrices().total;
+    const prices = calculatePrices();
+    const subtotal = prices.subtotal;
+    const total = prices.total;
 
     // Limpieza de espacios en blanco y formato
     const formData = {
@@ -220,9 +296,9 @@ export default function PurchaseForm({ productTitle, productPrice }) {
       numero: numero.trim(),
       nota: nota.trim(),
       product: productTitle,
-      quantity: 1,
+      quantity: quantity,
       subtotal,
-      shipping: 0,
+      shipping: prices.shipping,
       total
     };
 
@@ -263,7 +339,7 @@ export default function PurchaseForm({ productTitle, productPrice }) {
         content_type: 'product',
         value: total,
         currency: CURRENCY,
-        num_items: 1
+        num_items: quantity
       });
 
       // Cerrar el modal del formulario
@@ -333,12 +409,16 @@ export default function PurchaseForm({ productTitle, productPrice }) {
       errorMessage.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]';
       errorMessage.innerHTML = `
         <div class="bg-white p-6 rounded-lg shadow-xl max-w-md mx-4 text-center">
-          <svg class="mx-auto h-12 w-12 text-red-500 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+          <svg class="mx-auto h-12 w-12 text-red-500 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 0118 0 9 9 0 0118 0z"></path>
           </svg>
           <h3 class="text-lg font-bold mb-2 text-red-600">Ha ocurrido un error</h3>
-          <p class="text-gray-600 mb-4">Tu pedido se ha enviado correctamente, pero hubo un problema técnico. No te preocupes, nos pondremos en contacto contigo pronto.</p>
-          <button class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">Cerrar</button>
+          <p class="text-gray-600 mb-4">
+            Tu pedido se ha enviado correctamente, pero hubo un problema técnico. No te preocupes, nos pondremos en contacto contigo pronto.
+          </p>
+          <button class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">
+            Cerrar
+          </button>
         </div>
       `;
 
@@ -384,43 +464,22 @@ export default function PurchaseForm({ productTitle, productPrice }) {
   }, []);
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 pt-8 space-y-4 bg-white rounded-md shadow" id="purchaseForm">
-        <button
-          type="button"
-          onClick={handleCloseForm}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-
-        <div className="my-6 text-center transform hover:scale-105 transition-all duration-300">
-          <div className="bg-gradient-to-r from-yellow-100 via-yellow-200 to-yellow-100 p-4 rounded-xl shadow-lg border-2 border-yellow-300 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent animate-shine"></div>
-            <div className="relative z-10">
-              <h3 className="text-xl font-bold text-yellow-800 mb-2">
-                ¡Finalizar Compra! 🎉
-              </h3>
-              <p className="text-green-600 font-bold">
-                ¡Ahora no pagas nada, solo pagas al recibir el producto! 💰
-              </p>
-            </div>
+    <form onSubmit={handleSubmit} className="w-full" id="purchaseForm">
+      <div className="text-center">
+        <div className="bg-gradient-to-r from-yellow-100 via-yellow-200 to-yellow-100 p-4 rounded-t-lg shadow-lg border-b-2 border-yellow-300 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent animate-shine"></div>
+          <div className="relative z-10">
+            <h3 className="text-xl font-bold text-yellow-800 mb-2">
+              ¡Finalizar Compra! 🎉
+            </h3>
+            <p className="text-green-600 font-bold">
+              ¡No pagas nada ahora, solo pagas al recibir el producto! 💰
+            </p>
           </div>
         </div>
-        
+      </div>
+
+      <div className="p-6 space-y-6">
         {/* Nombre */}
         <div>
           <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-1">
@@ -620,23 +679,23 @@ export default function PurchaseForm({ productTitle, productPrice }) {
           <h3 className="text-lg font-semibold mb-3">Resumen de tu pedido</h3>
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">Producto:</span>
-              <span className="font-medium">${calculatePrices().subtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</span>
+              <span className="text-gray-600">Producto ({quantity} {quantity === 1 ? 'unidad' : 'unidades'}):</span>
+              <span className="font-medium">${currentPrice.toLocaleString('es-CL')}</span>
             </div>
             {hasDiscount && (
               <div className="flex justify-between items-center text-green-600">
                 <span>Descuento (10%):</span>
-                <span>-${calculatePrices().discount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</span>
+                <span>-${calculatePrices().discount.toLocaleString('es-CL')}</span>
               </div>
             )}
             <div className="flex justify-between items-center">
               <span className="text-gray-600">Envío:</span>
-              <span className="font-medium text-green-600">Gratis</span>
+              <span className="font-medium">${SHIPPING_COST.toLocaleString('es-CL')}</span>
             </div>
             <div className="pt-2 mt-2 border-t border-gray-200">
               <div className="flex justify-between items-center">
                 <span className="text-lg font-semibold">Total:</span>
-                <span className="text-lg font-bold text-red-600">${calculatePrices().total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</span>
+                <span className="text-lg font-bold text-red-600">${calculatePrices().total.toLocaleString('es-CL')}</span>
               </div>
             </div>
           </div>
@@ -656,7 +715,7 @@ export default function PurchaseForm({ productTitle, productPrice }) {
           <div className="flex items-center justify-center space-x-2">
             {isSubmitting ? (
               <>
-                <svg className="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <svg className="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
@@ -670,55 +729,55 @@ export default function PurchaseForm({ productTitle, productPrice }) {
             )}
           </div>
         </button>
-      </form>
-      {showExitPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
-          <div className="bg-white p-8 rounded-xl shadow-2xl max-w-md mx-4 relative transform transition-all duration-300">
-            {/* Icono de regalo sin animación */}
-            <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
-              <div>
-                <span className="text-6xl">🎁</span>
-              </div>
-            </div>
-            
-            <div className="text-center mt-8">
-              <h3 className="text-2xl font-bold mb-4 text-gray-800">
-                ¡Espera! Tenemos un regalo para ti
-              </h3>
-              
-              <div className="bg-yellow-50 p-4 rounded-lg mb-4">
-                <p className="text-lg text-gray-700 mb-2">
-                  Porque apreciamos tu interés en nuestros productos, queremos recompensarte con un
-                </p>
-                <p className="text-3xl font-bold text-red-600 animate-pulse">
-                  10% DE DESCUENTO
-                </p>
+        {showExitPopup && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
+            <div className="bg-white p-8 rounded-xl shadow-2xl max-w-md mx-4 relative transform transition-all duration-300">
+              {/* Icono de regalo sin animación */}
+              <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
+                <div>
+                  <span className="text-6xl">🎁</span>
+                </div>
               </div>
               
-              <p className="text-gray-600 mb-6">
-                ¡Aprovecha esta oportunidad única para ahorrar en tu compra!
-              </p>
-
-              <div className="space-y-4">
-                <button
-                  onClick={applyDiscount}
-                  className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full transform transition-all duration-300 hover:scale-105 animate-bounce shadow-lg hover:shadow-xl"
-                >
-                  ¡SÍ! QUIERO MI DESCUENTO 🎉
-                </button>
+              <div className="text-center mt-8">
+                <h3 className="text-2xl font-bold mb-4 text-gray-800">
+                  ¡Espera! Tenemos un regalo para ti
+                </h3>
                 
-                <button
-                  onClick={closeAll}
-                  className="w-full text-gray-500 hover:text-gray-700 font-medium py-2"
-                >
-                  No, gracias. Prefiero pagar precio completo
-                </button>
+                <div className="bg-yellow-50 p-4 rounded-lg mb-4">
+                  <p className="text-lg text-gray-700 mb-2">
+                    Porque apreciamos tu interés en nuestros productos, queremos recompensarte con un
+                  </p>
+                  <p className="text-3xl font-bold text-red-600 animate-pulse">
+                    10% DE DESCUENTO
+                  </p>
+                </div>
+                
+                <p className="text-gray-600 mb-6">
+                  ¡Aprovecha esta oportunidad única para ahorrar en tu compra!
+                </p>
+
+                <div className="space-y-4">
+                  <button
+                    onClick={applyDiscount}
+                    className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full transform transition-all duration-300 hover:scale-105 animate-bounce shadow-lg hover:shadow-xl"
+                  >
+                    ¡SÍ! QUIERO MI DESCUENTO 🎉
+                  </button>
+                  
+                  <button
+                    onClick={closeAll}
+                    className="w-full text-gray-500 hover:text-gray-700 font-medium py-2"
+                  >
+                    No, gracias. Prefiero pagar precio completo
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </form>
   );
 }
 

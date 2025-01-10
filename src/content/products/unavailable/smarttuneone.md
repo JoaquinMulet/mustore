@@ -1,7 +1,10 @@
 ---
 title: "SmartTune One"
-price: 29990
-oldPrice: 59990
+price: 10990
+price_1: 10990
+price_2: 11990
+price_3: 19990
+oldPrice: 26990
 productImages:
   - "/lampara_g/lampara_g1.webp"
   - "/lampara_g/lampara_g2.webp"
@@ -30,9 +33,8 @@ instructions:
   - "La función de carga inalámbrica requiere que el dispositivo esté conectado a la toma de corriente."
 
 shipping:
-  - "**Envío Gratis a Todo Chile**"
-  - "Tiempo estimado de entrega: 1-3 días hábiles en zonas urbanas"
-  - "Zonas extremas pueden tomar 4-7 días hábiles"
+  - "**Envío Express a Todo Chile**"
+  - "Tiempo estimado de entrega: 2-7 días hábiles"
   - "Seguimiento en tiempo real disponible"
 
 warranty:

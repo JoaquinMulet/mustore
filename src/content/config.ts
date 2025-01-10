@@ -2,9 +2,13 @@
 import { defineCollection, z } from 'astro:content';
 
 const productsCollection = defineCollection({
+  type: 'content',
   schema: z.object({
     title: z.string(),
     price: z.number(),
+    price_1: z.number(),
+    price_2: z.number(),
+    price_3: z.number(),
     oldPrice: z.number().optional(),
     productImages: z.array(z.string()),
     descriptionParagraphs: z.array(z.string()).optional(),
@@ -20,6 +24,8 @@ const productsCollection = defineCollection({
       })
     ).optional()
   }),
+  // Excluir los productos en la carpeta unavailable
+  entryGlobs: ['*.md', '!unavailable/**/*.md']
 });
 
 export const collections = {

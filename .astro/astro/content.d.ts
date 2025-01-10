@@ -141,20 +141,6 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"products": {
-"cargador_inalambrico.md": {
-	id: "cargador_inalambrico.md";
-  slug: "cargador_inalambrico";
-  body: string;
-  collection: "products";
-  data: InferEntrySchema<"products">
-} & { render(): Render[".md"] };
-"mini_aire_acondicionado.md": {
-	id: "mini_aire_acondicionado.md";
-  slug: "mini_aire_acondicionado";
-  body: string;
-  collection: "products";
-  data: InferEntrySchema<"products">
-} & { render(): Render[".md"] };
 "petbrush.md": {
 	id: "petbrush.md";
   slug: "petbrush";
@@ -162,16 +148,30 @@ declare module 'astro:content' {
   collection: "products";
   data: InferEntrySchema<"products">
 } & { render(): Render[".md"] };
-"sleeping_sound.md": {
-	id: "sleeping_sound.md";
-  slug: "sleeping_sound";
+"unavailable/cargador_inalambrico.md": {
+	id: "unavailable/cargador_inalambrico.md";
+  slug: "unavailable/cargador_inalambrico";
   body: string;
   collection: "products";
   data: InferEntrySchema<"products">
 } & { render(): Render[".md"] };
-"smarttuneone.md": {
-	id: "smarttuneone.md";
-  slug: "smarttuneone";
+"unavailable/mini_aire_acondicionado.md": {
+	id: "unavailable/mini_aire_acondicionado.md";
+  slug: "unavailable/mini_aire_acondicionado";
+  body: string;
+  collection: "products";
+  data: InferEntrySchema<"products">
+} & { render(): Render[".md"] };
+"unavailable/sleeping_sound.md": {
+	id: "unavailable/sleeping_sound.md";
+  slug: "unavailable/sleeping_sound";
+  body: string;
+  collection: "products";
+  data: InferEntrySchema<"products">
+} & { render(): Render[".md"] };
+"unavailable/smarttuneone.md": {
+	id: "unavailable/smarttuneone.md";
+  slug: "unavailable/smarttuneone";
   body: string;
   collection: "products";
   data: InferEntrySchema<"products">

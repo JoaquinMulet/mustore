@@ -1,9 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PurchaseForm from '../components/PurchaseForm.jsx';
-import MyGallery from '../components/MyGallery.jsx'; 
+import MyGallery from '../components/MyGallery.jsx';
 import CollaboratorsBanner from '../components/CollaboratorsBanner.jsx';
+import ProductAccordion from '../components/ProductAccordion.jsx';
+import ProductReviewsPreview from '../components/ProductReviewsPreview.jsx';
+import ProductPriceSection from '../components/ProductPriceSection.jsx';
+import ProductReviews from '../components/ProductReviews.jsx';
 import { marked } from 'marked';
+
+// Configurar marked
+marked.setOptions({
+  breaks: true,
+  gfm: true,
+});
 
 interface Review {
   name: string;
@@ -16,11 +26,13 @@ interface Props {
   title: string;
   productImages: string[];
   price: number;
+  price_1: number;
+  price_2: number;
+  price_3: number;
   oldPrice?: number;
   descriptionParagraphs?: string[];
   reviews?: Review[];
-  body?: any;
-  instructions?: string[];
+  specifications?: string[];
   shipping?: string[];
   warranty?: string[];
 }
@@ -29,10 +41,13 @@ const {
   title,
   productImages,
   price,
+  price_1,
+  price_2,
+  price_3,
   oldPrice,
   descriptionParagraphs = [],
   reviews = [],
-  instructions = [],
+  specifications = [],
   shipping = [],
   warranty = []
 } = Astro.props as Props;
@@ -43,25 +58,14 @@ function processMarkdown(text: string) {
     headerIds: false,
   });
 }
+
 ---
 
 <Layout title={title}>
-  <!-- (Opcional) Estilos globales para flechas, transiciones, etc. 
-       O ponlos directamente en tu .css, o en el componente. -->
   <style is:global>
-    /* Ejemplo de personalización:
-    button:hover {
-      transform: scale(1.05);
-    }
-    */
     @keyframes shine {
       0% { background-position: -200% 50%; }
       100% { background-position: 200% 50%; }
-    }
-
-    @keyframes truck {
-      0%, 100% { transform: translateX(0); }
-      50% { transform: translateX(4px); }
     }
 
     @keyframes cart {
@@ -75,368 +79,192 @@ function processMarkdown(text: string) {
       50% { transform: translateY(-4px); }
     }
 
-    @keyframes glow {
-      0% {
-        box-shadow: 0 0 5px rgba(220, 38, 38, 0.5),
-                   0 0 15px rgba(220, 38, 38, 0.3),
-                   inset 0 0 5px rgba(255, 255, 255, 0.1);
-      }
-      50% {
-        box-shadow: 0 0 15px rgba(220, 38, 38, 0.7),
-                   0 0 25px rgba(220, 38, 38, 0.5),
-                   inset 0 0 10px rgba(255, 255, 255, 0.2);
-      }
-      100% {
-        box-shadow: 0 0 5px rgba(220, 38, 38, 0.5),
-                   0 0 15px rgba(220, 38, 38, 0.3),
-                   inset 0 0 5px rgba(255, 255, 255, 0.1);
-      }
+    @keyframes shine {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(200%); }
+    }
+    
+    @keyframes bounce-x {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(3px); }
     }
 
-    @keyframes border-glow {
-      0%, 100% {
-        border-color: rgba(220, 38, 38, 0.5);
-      }
-      50% {
-        border-color: rgba(239, 68, 68, 0.8);
-      }
+    @keyframes pulse-soft {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
     }
 
-    @keyframes pulse {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.02);
-      }
+    @keyframes shine-fast {
+      0% { transform: translateX(-100%); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateX(100%); opacity: 0; }
     }
 
-    @keyframes textGlow {
-      0%, 100% {
-        text-shadow: 0 0 8px rgba(255, 255, 255, 0.7),
-                     0 0 12px rgba(255, 255, 255, 0.5);
-      }
-      50% {
-        text-shadow: 0 0 16px rgba(255, 255, 255, 0.9),
-                     0 0 20px rgba(255, 255, 255, 0.7);
-      }
-    }
-
-    @keyframes pulse-ring {
-      0% {
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
-      }
-      70% {
-        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
-      }
-      100% {
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
-      }
-    }
-
-    @keyframes scale-attention {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.05);
-      }
-    }
-
-    .animate-truck { animation: truck 2s ease-in-out infinite; }
     .animate-cart { animation: cart 2s ease-in-out infinite; }
     .animate-gift { animation: gift 2s ease-in-out infinite; }
-    .animate-scale-attention { animation: scale-attention 2s ease-in-out infinite; }
+    .animate-bounce-x {
+      animation: bounce-x 1s ease-in-out infinite;
+    }
 
-    .animate-pulse-ring {
-      animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    .animate-pulse-soft {
+      animation: pulse-soft 2s ease-in-out infinite;
     }
 
     .animate-shine {
       animation: shine 3s linear infinite;
     }
+
+    .animate-shine-fast {
+      animation: shine-fast 1s linear infinite;
+    }
   </style>
 
   <div class="max-w-[980px] mx-auto px-4 py-8 md:py-16">
     <div class="md:flex md:flex-col md:gap-12 md:items-start">
-      
-      <!-- Galería (React) -->
+      <!-- Galería -->
       <div class="md:w-full mt-4">
         <MyGallery productImages={productImages} title={title} client:load />
       </div>
 
-      <!-- Contenido del producto -->
+      <!-- Contenido principal -->
       <div class="md:w-full mt-4 md:mt-0">
         <h1 class="text-3xl md:text-4xl font-bold mb-6">{title}</h1>
+        
+        <!-- Sección de Precio -->
+        <ProductPriceSection price={price} oldPrice={oldPrice} client:load />
 
-        <!-- Precio y Botón de Compra -->
-        <div class="flex flex-col gap-4 mb-6">
-          <!-- Precio y envío -->
-          <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="flex items-baseline flex-wrap gap-2">
-              <span class="text-3xl md:text-4xl font-bold text-red-600">
-                ${price.toLocaleString('es-CL')}
-              </span>
-              {oldPrice && (
-                <>
-                  <span class="text-xl text-gray-500 line-through">
-                    ${oldPrice.toLocaleString('es-CL')}
-                  </span>
-                  <span class="bg-green-500 text-white px-2 py-1 rounded-full text-sm font-bold">
-                    {Math.round(((oldPrice - price) / oldPrice) * 100)}% OFF
-                  </span>
-                </>
-              )}
-            </div>
-            <div class="flex items-center gap-2 bg-red-50 border-2 border-red-200 rounded-lg px-4 py-2">
-              <span class="text-red-600 font-bold animate-truck">🚚</span>
-              <span class="text-red-600 font-bold tracking-wide">¡ENVÍO GRATIS!</span>
-            </div>
-          </div>
+        <!-- Preview de Reviews y Botón de Compra -->
+        <ProductReviewsPreview 
+          reviews={reviews} 
+          price_1={price_1}
+          price_2={price_2}
+          price_3={price_3}
+          client:load 
+        />
 
-          <button
-            id="openPurchaseModal"
-            class="group w-full text-white py-4 px-8 rounded-lg text-xl font-bold bg-gradient-to-r from-red-500 via-red-600 to-red-500 hover:from-red-600 hover:via-red-700 hover:to-red-600 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl relative overflow-hidden flex items-center justify-center"
-          >
-            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 animate-shine"></div>
-            <div class="absolute inset-0 animate-pulse-ring"></div>
-            <div class="flex flex-col items-center relative">
-              <div class="flex items-center gap-3 animate-scale-attention">
-                <span class="animate-cart">🛒</span>
-                <span class="text-glow whitespace-nowrap tracking-wide uppercase">
-                  ¡COMPRAR AHORA!
-                </span>
-                <span class="animate-gift">🎁</span>
-              </div>
-              <div class="flex items-center gap-2 text-sm mt-1">
-                <span class="animate-pulse">⚡</span>
-                <span class="font-medium opacity-90">¡Últimas unidades!</span>
-                <span class="animate-pulse">⚡</span>
-              </div>
-            </div>
-          </button>
-
-          {reviews.length > 0 && (
-            <>
-              <div class="flex items-center justify-center gap-4 mt-6 py-3 px-4 bg-gradient-to-r from-gray-50/50 via-white to-gray-50/50 rounded-lg hover:shadow-sm transition-all duration-300">
-                <div class="flex items-center space-x-2">
-                  <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-yellow-400">
-                    {(reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length).toFixed(1)}
-                  </span>
-                  <div class="flex items-center space-x-0.5">
-                    {Array.from({ length: 5 }, (_, i) => {
-                      const averageRating = reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
-                      return (
-                        <svg
-                          class={`w-4 h-4 ${i < Math.round(averageRating) ? 'text-yellow-400' : 'text-gray-200'}`}
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div class="w-px h-8 bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
-                <div class="flex items-center space-x-1">
-                  <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
-                  <span class="text-sm">
-                    <span class="font-medium text-gray-700">{reviews.length}</span>
-                    <span class="text-gray-500 ml-1">{reviews.length === 1 ? 'opinión' : 'opiniones'} validadas</span>
-                  </span>
-                </div>
-              </div>
-              <div class="w-full my-4 border-b border-gray-200 opacity-50" style="background: linear-gradient(to right, transparent, #e5e7eb 35%, #e5e7eb 65%, transparent);"></div>
-            </>
-          )}
-
-          <div class="space-y-4 text-gray-600">
-            {descriptionParagraphs.map((p) => (
-              <p class="text-lg leading-relaxed">{p}</p>
-            ))}
-          </div>
-
-          {/* Banner de Colaboradores */}
-          <CollaboratorsBanner client:load />
-
-          {/* Menús acordeón */}
-          <div class="mt-12 space-y-4">
-            {instructions.length > 0 && (
-              <div class="border border-gray-200 rounded-xl overflow-hidden">
-                <button
-                  class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
-                  onclick="toggleAccordion(this)"
-                >
-                  <span class="text-lg font-semibold">Modo de Uso</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 transform transition-transform"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                <div class="hidden px-6 py-4 bg-gray-50">
-                  <ul class="list-disc list-inside space-y-2 text-gray-600">
-                    {instructions.map((instruction) => (
-                      <p set:html={processMarkdown(instruction)} />
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            )}
-
-            {shipping.length > 0 && (
-              <div class="border border-gray-200 rounded-xl overflow-hidden">
-                <button
-                  class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
-                  onclick="toggleAccordion(this)"
-                >
-                  <span class="text-lg font-semibold">Envío</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 transform transition-transform"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                <div class="hidden px-6 py-4 bg-gray-50">
-                  <div class="space-y-2 text-gray-600">
-                    {shipping.map((item) => (
-                      <p set:html={processMarkdown(item)} />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {warranty.length > 0 && (
-              <div class="mt-12 space-y-4">
-                <div class="border border-gray-200 rounded-xl overflow-hidden">
-                  <button
-                    class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
-                    onclick="toggleAccordion(this)"
-                  >
-                    <span class="text-lg font-semibold">Garantía</span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5 transform transition-transform"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-                  <div class="hidden px-6 py-4 bg-gray-50">
-                    <ul class="list-disc list-inside space-y-2 text-gray-600">
-                      {warranty.map((item) => (
-                        <li>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+        <!-- Descripción -->
+        <div class="space-y-4 text-gray-600 mt-8">
+          {descriptionParagraphs.map((p) => (
+            <p class="text-lg leading-relaxed" set:html={marked.parse(p)} />
+          ))}
         </div>
-      </div>
 
-    <!-- Modal de compra -->
-    <div id="purchaseModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[9999]">
-      <div class="fixed inset-0 flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto relative">
-          <button class="close-modal absolute top-4 right-4 text-gray-500 hover:text-gray-700">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          <PurchaseForm productTitle={title} productPrice={price} client:load />
+        <!-- Banner de Colaboradores -->
+        <div class="mt-8">
+          <CollaboratorsBanner client:load />
+        </div>
+
+        <!-- Acordeón de Información -->
+        <ProductAccordion 
+          descriptionParagraphs={descriptionParagraphs}
+          specifications={specifications}
+          shipping={shipping}
+          warranty={warranty}
+          client:load
+        />
+
+        <!-- Reviews Completas -->
+        <div class="mt-16">
+          <ProductReviews reviews={reviews} client:load />
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Sección de Reseñas -->
-    {reviews.length > 0 && (
-      <>
-        <div class="w-full my-12 border-b border-gray-200 opacity-50" style="background: linear-gradient(to right, transparent, #e5e7eb 35%, #e5e7eb 65%, transparent);"></div>
-        <div class="mt-16 max-w-[980px] mx-auto px-4">
-          <h2 class="text-3xl font-bold mb-8 text-center">Opiniones de Clientes</h2>
-          <div class="grid md:grid-cols-2 gap-6">
-            {reviews.map((review, index) => (
-              <div 
-                key={index} 
-                class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300"
-              >
-                <div class="flex items-center mb-4">
-                  <div class="flex-grow">
-                    <h3 class="font-semibold text-lg">{review.name}</h3>
-                    <span class="text-sm text-gray-500">{review.date}</span>
-                  </div>
-                  <div class="flex">
-                    {Array.from({ length: 5 }, (_, i) => (
-                      <svg 
-                        key={i}
-                        class={`w-5 h-5 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`}
-                        fill="currentColor" 
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                </div>
-                <p class="text-gray-700 italic">"{review.text}"</p>
-              </div>
-            ))}
+  <!-- Modal de compra -->
+  <div id="purchaseModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[9999] overflow-hidden">
+    <div class="fixed inset-0 flex items-center justify-center p-4">
+      <div class="bg-white rounded-lg max-w-md w-full max-h-[90vh] relative">
+        <button class="close-modal absolute -top-3 -right-3 bg-white rounded-full p-1 shadow-lg text-gray-500 hover:text-gray-700 z-[9999]">
+          <span class="sr-only">Cerrar</span>
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+        <div class="overflow-y-auto max-h-[90vh] overscroll-contain scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+          <div id="purchaseForm" data-quantity="1" data-price={price}>
+            <PurchaseForm productTitle={title} productPrice={price} client:load />
           </div>
         </div>
-      </>
-    )}
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* Estilo personalizado para la barra de scroll */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #9ca3af;
+    }
+  </style>
 
   <!-- Scripts para acordeones y modal -->
   <script is:inline>
-    // Acordeones
-    window.toggleAccordion = (button) => {
-      const content = button.nextElementSibling;
-      content.style.display = content.style.display === 'none' ? 'block' : 'none';
-    };
-
-    // Modal
     document.addEventListener('DOMContentLoaded', () => {
-      const modal = document.getElementById('purchaseModal');
-      const openButton = document.getElementById('openPurchaseModal');
-      const closeButtons = document.querySelectorAll('.close-modal');
-
-      if (openButton) {
-        openButton.addEventListener('click', () => {
-          if (modal) modal.style.display = 'block';
-        });
-      }
-
-      closeButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-          e.preventDefault();
-          if (typeof window.handleFormClose === 'function') {
-            window.handleFormClose();
+      // Funciones para los acordeones
+      const accordionButtons = document.querySelectorAll('[data-accordion-target]');
+      accordionButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const targetId = button.getAttribute('data-accordion-target');
+          const target = document.querySelector(targetId);
+          const icon = button.querySelector('[data-accordion-icon]');
+          
+          if (target.classList.contains('hidden')) {
+            target.classList.remove('hidden');
+            icon.style.transform = 'rotate(180deg)';
+          } else {
+            target.classList.add('hidden');
+            icon.style.transform = 'rotate(0deg)';
           }
         });
       });
 
-      window.addEventListener('click', (e) => {
-        if (e.target === modal && typeof window.handleFormClose === 'function') {
-          window.handleFormClose();
+      // Funciones para el modal
+      const modal = document.getElementById('purchaseModal');
+      const openButtons = document.querySelectorAll('.open-modal');
+
+      function openModal() {
+        if (modal) {
+          modal.classList.remove('hidden');
+          modal.style.display = 'block';
         }
+      }
+
+      // Función global para abrir el modal (usada por los botones de compra)
+      window.openPurchaseModal = openModal;
+
+      // Función global para cerrar el modal
+      window.closePurchaseModal = () => {
+        if (modal) {
+          modal.classList.add('hidden');
+          modal.style.display = 'none';
+        }
+      };
+
+      openButtons.forEach(button => {
+        button.addEventListener('click', openModal);
       });
+
+      // Función para establecer la cantidad y precio
+      window.setQuantityPrice = (quantity, price) => {
+        const purchaseForm = document.getElementById('purchaseForm');
+        if (purchaseForm) {
+          purchaseForm.setAttribute('data-quantity', quantity.toString());
+          purchaseForm.setAttribute('data-price', price.toString());
+        }
+      };
     });
   </script>
 </Layout>

@@ -9,17 +9,13 @@ const { title } = Astro.props;
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="MuStore - Accesorios y Electrónica Premium para Smartphones" />
+    <meta name="description" content="MuStore - Productos Premium para el Cuidado de tu Mascota" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title} | MuStore</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://api.fontshare.com/v2/css?f[]=satoshi@700&display=swap"
+      href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap"
       rel="stylesheet"
     />
 
@@ -54,7 +50,7 @@ const { title } = Astro.props;
     <!-- End Meta Pixel Code -->
   </head>
 
-  <body class="min-h-screen bg-white flex flex-col">
+  <body class="min-h-screen bg-white flex flex-col font-satoshi">
     <header class="fixed w-full bg-white/90 backdrop-blur-md z-50">
       <nav
         class="max-w-[980px] mx-auto px-4 h-[44px] flex items-center justify-between text-sm"
@@ -104,17 +100,9 @@ const { title } = Astro.props;
           </button>
         </div>
       </nav>
-
-      <!-- Mobile menu -->
-      <div class="hidden md:hidden bg-white" id="mobile-menu">
-        <div class="px-4 pt-2 pb-3 space-y-1">
-          <a href="/" class="block px-3 py-2 text-gray-900">Home</a>
-          <a href="/about" class="block px-3 py-2 text-gray-900">Nosotros</a>
-        </div>
-      </div>
     </header>
 
-    <main class="flex-1">
+    <main class="flex-grow">
       <slot />
     </main>
 
@@ -128,7 +116,7 @@ const { title } = Astro.props;
               <span class="font-['Satoshi'] text-xl tracking-wide text-white">Store</span>
             </div>
             <p class="text-sm text-gray-400 max-w-sm mx-auto md:mx-0">
-              Tu tienda multifuncional de confianza. Encuentra productos electrónicos innovadores y artículos de calidad para el cuidado de tus mascotas.
+              Tu tienda de confianza para productos premium de mascotas. Encuentra artículos innovadores para el cuidado y bienestar de tu compañero peludo.
             </p>
           </div>
 
@@ -160,20 +148,31 @@ const { title } = Astro.props;
         <div class="border-t border-gray-800 mt-8 pt-8">
           <div class="text-center">
             <p class="text-sm text-gray-400">
-              &copy; {new Date().getFullYear()} MUSTORE CHILE. Todos los derechos reservados.
+              &copy; {new Date().getFullYear()} μSTORE CHILE. Todos los derechos reservados.
             </p>
           </div>
         </div>
       </div>
     </footer>
-
-    <script>
-      const mobileMenuButton = document.getElementById('mobile-menu-button');
-      const mobileMenu = document.getElementById('mobile-menu');
-
-      mobileMenuButton?.addEventListener('click', () => {
-        mobileMenu?.classList.toggle('hidden');
-      });
-    </script>
   </body>
 </html>
+
+<style is:global>
+  :root {
+    --accent: 136, 58, 234;
+    --accent-light: 224, 204, 250;
+    --accent-dark: 49, 10, 101;
+    --accent-gradient: linear-gradient(
+      45deg,
+      rgb(var(--accent)),
+      rgb(var(--accent-light)) 30%,
+      white 60%
+    );
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+</style>

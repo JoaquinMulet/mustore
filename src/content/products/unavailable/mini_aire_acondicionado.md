@@ -1,7 +1,10 @@
 ---
 title: "Mini Aire Acondicionado Portátil"
-price: 24990
-oldPrice: 49990
+price: 10990
+price_1: 10990
+price_2: 11990
+price_3: 19990
+oldPrice: 26990
 productImages:
   - "/mini_aire_acondicionado/aire5.webp"
   - "/mini_aire_acondicionado/aire1.png"
@@ -30,9 +33,8 @@ specifications:
   - "Batería interna de larga duración (funciona incluso a máxima potencia por días, según uso)"
 
 shipping:
-  - "**Envío Gratis a Todo Chile**"
-  - "Tiempo estimado de entrega: 1-3 días hábiles en zonas urbanas"
-  - "Zonas extremas pueden tomar 4-7 días hábiles"
+  - "**Envío Express a Todo Chile**"
+  - "Tiempo estimado de entrega: 2-7 días hábiles"
   - "Seguimiento en tiempo real disponible"
 
 warranty:

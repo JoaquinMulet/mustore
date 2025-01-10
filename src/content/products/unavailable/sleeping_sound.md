@@ -1,7 +1,10 @@
 ---
 title: "Sleeping Sound Antifaz"
-price: 19990
-oldPrice: 39990
+price: 10990
+price_1: 10990
+price_2: 11990
+price_3: 19990
+oldPrice: 26990
 productImages:
   - "/antifaz/antifaz1.jpeg"
   - "/antifaz/antifaz2.jpg"
@@ -39,9 +42,8 @@ instructions:
 - "**Recarga fácilmente:** Después de usarlo, cárgalo por completo en 2.5 horas para que esté listo para la próxima noche."
   
 shipping:
-  - "**Envío Gratis a Todo Chile**"
-  - "Tiempo estimado de entrega: 1-3 días hábiles en zonas urbanas"
-  - "Zonas extremas pueden tomar 4-7 días hábiles"
+  - "**Envío Express a Todo Chile**"
+  - "Tiempo estimado de entrega: 2-7 días hábiles"
   - "Seguimiento en tiempo real disponible"
 
 warranty:

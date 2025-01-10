@@ -4,6 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        satoshi: ['Satoshi', 'sans-serif'],
         playfair: ['Playfair Display', 'serif'],
       },
     },

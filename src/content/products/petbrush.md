@@ -1,6 +1,9 @@
 ---
 title: "PetBrush™ - Cepillo Eléctrico para Mascotas"
-price: 14990
+price: 6990
+price_1: 6990
+price_2: 9990
+price_3: 19990
 oldPrice: 26990
 productImages:
   - "/petbrush/petbrush5.webp"
@@ -9,9 +12,9 @@ productImages:
   - "/petbrush/petbrush3.webp"
   - "/petbrush/petbrush4.webp"
 descriptionParagraphs:
-  - "Cepillo Eléctrico PetBrush™ con 26% OFF y Envío Gratis a Todo Chile"
-  - "¿Cansado del pelo suelto y del estrés del aseo? Con PetBrush™, transforma esos momentos en una experiencia de spa relajante para tu mascota. ¡No es solo un cepillo, es la solución definitiva para un aseo sin esfuerzo y sin estrés!"
-  - "¿Qué hace único al PetBrush™? Su tecnología de vapor elimina el pelo suelto y limpia suavemente el pelaje, mientras relaja a tu mascota. ¡Olvídate del estrés y disfruta de un cepillado fácil y calmante!"
+  - "**Cepillo Eléctrico PetBrush™**"
+  - "¿Cansado del pelo suelto y del estrés del aseo? Con **PetBrush™**, transforma esos momentos en una experiencia de spa relajante para tu mascota. **¡Es la solución definitiva para un aseo sin esfuerzo y sin estrés!**"
+  - "¿Qué hace único al PetBrush™? Su tecnología de vapor elimina el pelo suelto y limpia suavemente el pelaje, mientras relaja a tu mascota. **¡Olvídate del estrés y disfruta de un cepillado fácil y calmante!**"
   - "1. Llena el depósito con agua."
   - "2. Enciende el dispositivo."
   - "3. Cepilla a tu mascota con movimientos suaves."
@@ -28,7 +31,7 @@ specifications:
   - "Dimensiones: Compacto y fácil de almacenar"
 
 shipping:
-  - "**Envío Gratis a Todo Chile**"
+  - "**Envío Express a Todo Chile**"
   - "Tiempo estimado de entrega: 2-7 días hábiles"
   - "Seguimiento en tiempo real disponible"
 
@@ -70,4 +73,3 @@ reviews:
     date: "hace 5 días"
     rating: 5
     text: "Es muy bueno, les encanta a mis gatos. Saca un montón de pelos y encima los limpia. Si le pones perfume, quedan como peluchitos."
-

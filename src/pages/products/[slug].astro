@@ -4,7 +4,8 @@ import { getCollection } from 'astro:content';
 import ProductPage from '../../components/ProductPage.astro';
 
 export async function getStaticPaths() {
-  const products = await getCollection('products');
+  // Obtener solo los productos disponibles (no en la carpeta unavailable)
+  const products = (await getCollection('products')).filter(product => !product.id.includes('unavailable/'));
   return products.map(product => ({
     params: { slug: product.slug },
     props: { product },
@@ -23,6 +24,9 @@ const title = `${product.data.title} | MuStore`;
   title={title}
   productImages={product.data.productImages}
   price={product.data.price}
+  price_1={product.data.price_1}
+  price_2={product.data.price_2}
+  price_3={product.data.price_3}
   oldPrice={product.data.oldPrice}
   descriptionParagraphs={product.data.descriptionParagraphs || []}
   reviews={product.data.reviews || []}
