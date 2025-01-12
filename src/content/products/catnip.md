@@ -6,7 +6,7 @@ boton_3: 9
 price: 15990
 price_1: 15990
 price_2: 19990
-price_3: 19990
+price_3: 25990
 oldPrice: 26990
 productImages:
   - "/catnip/catnip_video.gif"
