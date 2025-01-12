@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
-export default function ProductReviewsPreview({ reviews, price_1, price_2, price_3 }) {
+export default function ProductReviewsPreview({ reviews, price_1, price_2, price_3, boton_1, boton_2, boton_3 }) {
   console.log('Received prices:', { price_1, price_2, price_3 });
+  console.log('Received quantities:', { boton_1, boton_2, boton_3 });
   
-  const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [selectedQuantity, setSelectedQuantity] = useState(boton_1 || 1);
   
   if (!price_1 || !price_2 || !price_3) {
     console.error('Missing prices:', { price_1, price_2, price_3 });
@@ -30,31 +31,31 @@ export default function ProductReviewsPreview({ reviews, price_1, price_2, price
       {/* Botones de cantidad */}
       <div className="flex flex-row justify-center gap-3 my-4 flex-wrap">
         <button
-          onClick={() => handleQuantitySelect(1, price_1)}
-          className={getButtonClass(1)}
+          onClick={() => handleQuantitySelect(boton_1, price_1)}
+          className={getButtonClass(boton_1)}
         >
           <div className="flex flex-col items-center">
-            <span className="font-semibold text-lg mb-0.5">1</span>
-            <span className="text-xs opacity-75 mb-1">unidad</span>
+            <span className="font-semibold text-lg mb-0.5">{boton_1}</span>
+            <span className="text-xs opacity-75 mb-1">{boton_1 === 1 ? 'unidad' : 'unidades'}</span>
             <span className="font-medium">${price_1.toLocaleString('es-CL')}</span>
           </div>
         </button>
         <button
-          onClick={() => handleQuantitySelect(2, price_2)}
-          className={getButtonClass(2)}
+          onClick={() => handleQuantitySelect(boton_2, price_2)}
+          className={getButtonClass(boton_2)}
         >
           <div className="flex flex-col items-center">
-            <span className="font-semibold text-lg mb-0.5">2</span>
+            <span className="font-semibold text-lg mb-0.5">{boton_2}</span>
             <span className="text-xs opacity-75 mb-1">unidades</span>
             <span className="font-medium">${price_2.toLocaleString('es-CL')}</span>
           </div>
         </button>
         <button
-          onClick={() => handleQuantitySelect(3, price_3)}
-          className={getButtonClass(3)}
+          onClick={() => handleQuantitySelect(boton_3, price_3)}
+          className={getButtonClass(boton_3)}
         >
           <div className="flex flex-col items-center">
-            <span className="font-semibold text-lg mb-0.5">3</span>
+            <span className="font-semibold text-lg mb-0.5">{boton_3}</span>
             <span className="text-xs opacity-75 mb-1">unidades</span>
             <span className="font-medium">${price_3.toLocaleString('es-CL')}</span>
           </div>

@@ -1,8 +1,11 @@
 ---
 title: "Sleeping Sound Antifaz"
-price: 10990
-price_1: 10990
-price_2: 11990
+boton_1: 1
+boton_2: 2
+boton_3: 3
+price: 14990
+price_1: 14990
+price_2: 19990
 price_3: 19990
 oldPrice: 26990
 productImages:

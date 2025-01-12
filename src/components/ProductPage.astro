@@ -29,6 +29,9 @@ interface Props {
   price_1: number;
   price_2: number;
   price_3: number;
+  boton_1: number;
+  boton_2: number;
+  boton_3: number;
   oldPrice?: number;
   descriptionParagraphs?: string[];
   reviews?: Review[];
@@ -44,6 +47,9 @@ const {
   price_1,
   price_2,
   price_3,
+  boton_1,
+  boton_2,
+  boton_3,
   oldPrice,
   descriptionParagraphs = [],
   reviews = [],
@@ -51,6 +57,8 @@ const {
   shipping = [],
   warranty = []
 } = Astro.props as Props;
+
+console.log('ProductPage received props:', { boton_1, boton_2, boton_3 });
 
 function processMarkdown(text: string) {
   return marked.parse(text, {
@@ -166,6 +174,9 @@ const productSchema = {
           price_1={price_1}
           price_2={price_2}
           price_3={price_3}
+          boton_1={boton_1}
+          boton_2={boton_2}
+          boton_3={boton_3}
           client:load 
         />
 
