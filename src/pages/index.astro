@@ -7,16 +7,16 @@ const products = (await getCollection('products')).filter(product => !product.id
 
 ---
 
-<Layout title="MuStore | Productos Premium para Mascotas">
+<Layout title="μStore | Tecnología Premium">
   <!-- Hero Section -->
   <section class="relative h-[80vh] flex items-center justify-center bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100">
     <div class="text-center px-4">
       <h1 class="text-5xl md:text-6xl font-bold mb-6">
-        El cuidado que tu mascota<br/>
-        se merece
+        La Mejor Tecnología<br/>
+        a tu Alcance
       </h1>
       <p class="text-xl md:text-2xl mb-8 text-gray-700">
-        Productos premium para el bienestar y felicidad de tu compañero peludo.
+        Productos premium de audio y tecnología para mejorar tu experiencia digital
       </p>
       <a 
         href="#products" 
@@ -54,7 +54,7 @@ const products = (await getCollection('products')).filter(product => !product.id
                   href={`/products/${product.slug}`}
                   class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors"
                 >
-                  Comprar ahora
+                  Ver más
                 </a>
               </div>
             </div>

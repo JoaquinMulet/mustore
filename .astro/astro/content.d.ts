@@ -141,16 +141,16 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"products": {
-"catnip.md": {
-	id: "catnip.md";
-  slug: "catnip";
+"airpods_max.md": {
+	id: "airpods_max.md";
+  slug: "airpods_max";
   body: string;
   collection: "products";
   data: InferEntrySchema<"products">
 } & { render(): Render[".md"] };
-"petbrush.md": {
-	id: "petbrush.md";
-  slug: "petbrush";
+"airpods_pro.md": {
+	id: "airpods_pro.md";
+  slug: "airpods_pro";
   body: string;
   collection: "products";
   data: InferEntrySchema<"products">
@@ -162,9 +162,23 @@ declare module 'astro:content' {
   collection: "products";
   data: InferEntrySchema<"products">
 } & { render(): Render[".md"] };
+"unavailable/catnip.md": {
+	id: "unavailable/catnip.md";
+  slug: "unavailable/catnip";
+  body: string;
+  collection: "products";
+  data: InferEntrySchema<"products">
+} & { render(): Render[".md"] };
 "unavailable/mini_aire_acondicionado.md": {
 	id: "unavailable/mini_aire_acondicionado.md";
   slug: "unavailable/mini_aire_acondicionado";
+  body: string;
+  collection: "products";
+  data: InferEntrySchema<"products">
+} & { render(): Render[".md"] };
+"unavailable/petbrush.md": {
+	id: "unavailable/petbrush.md";
+  slug: "unavailable/petbrush";
   body: string;
   collection: "products";
   data: InferEntrySchema<"products">
